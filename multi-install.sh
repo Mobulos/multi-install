@@ -1,13 +1,5 @@
 #!/usr/bin/env bash
 
-# LADE DAS LOG FEATURE
-rm log4bash.sh
-clear
-curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/log4bash.sh --output log4bash.sh
-chmod +x log4bash.sh
-source log4bash.sh
-clear
-
 # LADE "jumpto"
 function jumpto() {
   label=$1
@@ -15,6 +7,14 @@ function jumpto() {
   eval "$cmd"
   exit
 }
+
+# LADE DAS LOG FEATURE
+rm log4bash.sh
+clear
+curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/log4bash.sh --output log4bash.sh
+chmod +x log4bash.sh
+source log4bash.sh
+clear
 
 # LEGE JUMPTOs AN
 menue=${1:-"menue"}
