@@ -65,7 +65,7 @@ fi
 
 # DAS MENÜ
 
-menue:
+$2:
 log_success "test"
 echo hi
 exit
