@@ -69,11 +69,11 @@ $1:
 
 # CHECK, OB DAS SCRIPT HEUTE UPGEDATED WURDE
 if [ -f $(date +%Y-%m-%d) ]; then
-	# WENN HEUTE NICHT UPGEDATED GEHE WEITER
-	clear
-elif [[ * ]]; then
 	# WENN HEUTE BEREITS UPGEDATED GEHE ZUM MENÜ
 	jumpto menue
+elif [[ * ]]; then
+	# WENN HEUTE NICHT UPGEDATED GEHE WEITER
+	clear
 fi
 # LÖSCHE "ZULETZT UPGEDATED" DATEI
 rm 20*
@@ -88,7 +88,6 @@ curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/mast
 echo "$reset"
 chmod +x multi-install.sh
 ./multi-install.sh
-exit
 
 # DAS MENÜ
 
