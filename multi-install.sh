@@ -90,9 +90,6 @@ function soon {
 	menue
 }
 
-particular_script() {
-	false
-}
 
 # LADE DAS LOG FEATURE
 rm .log4bash.sh
@@ -133,3 +130,6 @@ elif [[ * ]]; then
 	done
 	update
 fi
+
+menue
+exit
