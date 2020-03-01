@@ -75,13 +75,13 @@ touch $(date +%Y-%m-%d)
 clear
 echo "$red Die neuste Version wird heruntergeladen"
 echo "$reset"
-# rm backupscript.sh
-# echo "$red"
-# curl --progress-bar https://raw.githubusercontent.com/Mobulos/backup/master/backupscript.sh --output backupscript.sh
-# echo "$reset"
-# read -t 1
-# chmod +x multi-install.sh
-# ./multi-install.sh
+rm multi-install.sh
+echo "$red"
+curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh --output multi-install.sh
+echo "$reset"
+read -t 1
+chmod +x multi-install.sh
+./multi-install.sh
 exit
 
 # DAS MENÜ
