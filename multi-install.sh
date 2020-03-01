@@ -8,14 +8,6 @@ function jumpto() {
 	exit
 }
 
-# LADE DAS LOG FEATURE
-rm log4bash.sh
-clear
-curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/log4bash.sh --output log4bash.sh
-chmod +x log4bash.sh
-source log4bash.sh
-clear
-
 # LEGE JUMPTOs AN
 menue=${1:-"menue"}
 update=${2:-"update"}
@@ -28,6 +20,14 @@ update=${2:-"update"}
 # ---=${9:-"---"}
 # ---=${10:-"---"}
 # ---=${11:-"---"}
+
+# LADE DAS LOG FEATURE
+rm log4bash.sh
+clear
+curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/log4bash.sh --output log4bash.sh
+chmod +x log4bash.sh
+source log4bash.sh
+clear
 
 # ROOT CHECK
 FILE="/tmp/out.$$"
