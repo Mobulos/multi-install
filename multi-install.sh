@@ -67,6 +67,7 @@ function update {
 		rm 20* || :
 		clear
 		echo "$red Die neuste Version wird heruntergeladen"
+		rm multi-install.sh
 		curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh
 		sleep 2
 		# wget https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
