@@ -54,13 +54,10 @@ elif [[ * ]]; then
 	apt-get update
 	clear
 	apt-get upgrade -y
-	clear
-	apt-get install curl -y
-	clear
-	apt-get install wget -y
-	clear
-	apt-get install sudo -y
-	clear
+
+	for i in curl wget sudo screen; do
+		apt-get install $i -y
+	done
 fi
 
 # DAS MENÜ
@@ -86,7 +83,8 @@ elif [[ * ]]; then
 	echo "$reset"
 	rm multi-install.sh
 	echo "$red"
-	wget https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
+	curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh
+	# wget https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
 	echo "$reset"
 	read -t0.5
 	chmod +x multi-install.sh
