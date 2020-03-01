@@ -86,6 +86,9 @@ elif [[ * ]]; then
 	# wget https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
 	echo "$reset"
 	read -t0.5
+	clear
+	log_success "Das Update wurde Erfolgreich heruntergeladen!"
+	read -t1
 	chmod +x multi-install.sh
 fi
 touch "$(date +%Y-%m-%d)"
