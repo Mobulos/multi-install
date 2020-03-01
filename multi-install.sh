@@ -65,7 +65,8 @@ fi
 
 # UPDATE DAS SCRIPT
 
-update:
+$1:
+
 # CHECK, OB DAS SCRIPT HEUTE UPGEDATED WURDE
 if [ -f $(date +%Y-%m-%d) ]; then
 	# WENN HEUTE NICHT UPGEDATED GEHE WEITER
