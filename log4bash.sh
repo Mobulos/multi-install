@@ -91,7 +91,7 @@ log_speak() {
   return 0
 }
 
-log_success() { log "$1" "SUCCESS" "${LOG_SUCCESS_COLOR}"; }
+log_success() { log "$1" "ERFOLGREICH" "${LOG_SUCCESS_COLOR}"; }
 log_error() {
   log "$1" "ERROR" "${LOG_ERROR_COLOR}"
   log_speak "$1"
