@@ -46,7 +46,7 @@ reset=($(tput sgr0))
 # ÜBRPRÜFE OB ERSTER START
 if [ -f $(date +%Y-%m*) ]; then
   # WENN NICHT ERSTER START:
-  jumpto update
+  clear
 elif [[ * ]]; then
   # WENN ERSTER START:
   apt-get update
