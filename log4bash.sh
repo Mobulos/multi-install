@@ -5,7 +5,7 @@
 # Licensed under the MIT license
 # http://github.com/fredpalmer/log4bash
 #--------------------------------------------------------------------------------------------------
-set -e # Fail on first error
+# Fail on first error
 
 # Useful global variables that users may wish to reference
 SCRIPT_ARGS="$@"

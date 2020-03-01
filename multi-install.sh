@@ -10,33 +10,24 @@ function jumpto() {
 	exit
 }
 
+# LEGE JUMPTOs AN
+menue=${1:-"menue"}
+update=${2:-"update"}
+
 function soon() {
 	clear
 	log_warning "Diese Funktion wird später hinzugefügt!"
 	read -n1
 	clear
-	jumpto menue
+	jumpto $menue
 }
 
 particular_script() {
 	false
 }
 
-# LEGE JUMPTOs AN
-menue=${1:-"menue"}
-update=${2:-"update"}
-# ---=${3:-"---"}
-# ---=${4:-"---"}
-# ---=${5:-"---"}
-# ---=${6:-"---"}
-# ---=${7:-"---"}
-# ---=${8:-"---"}
-# ---=${9:-"---"}
-# ---=${10:-"---"}
-# ---=${11:-"---"}
-
 # LADE DAS LOG FEATURE
-rm log4bash.sh
+rm .log4bash.sh
 clear
 curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/log4bash.sh -o .log4bash.sh
 chmod +x .log4bash.sh
@@ -76,7 +67,7 @@ fi
 
 # DAS MENÜ
 
-$1:
+menue:
 set -u
 clear
 echo "$yellow########################################"
@@ -124,7 +115,7 @@ case $befehl in
 *)
 	clear
 	log_error "Du musst dich vertippt haben..."
-	jumpto menue
+	jumpto $menue
 	;;
 esac
 
@@ -132,11 +123,11 @@ esac
 exit
 
 # UPDATE DAS SCRIPT
-$2:
+update:
 # CHECK, OB DAS SCRIPT HEUTE UPGEDATED WURDE
 if [ -f $(date +%Y-%m-%d) ]; then
 	# WENN HEUTE BEREITS UPGEDATED GEHE ZUM MENÜ
-	jumpto menue
+	jumpto $menue
 elif [[ * ]]; then
 	# WENN HEUTE NICHT UPGEDATED GEHE WEITER
 	# LÖSCHE "ZULETZT UPGEDATED" DATEI
@@ -145,6 +136,7 @@ elif [[ * ]]; then
 	clear
 	echo "$red Die neuste Version wird heruntergeladen"
 	curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh
+	sleep 2
 	# wget https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
 	echo "$reset"
 	sleep .5
