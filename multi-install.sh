@@ -87,5 +87,5 @@ exit
 
 # DAS MENÜ
 menue:
-echo test
+log_success test
 exit
