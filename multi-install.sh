@@ -71,12 +71,14 @@ fi
 # DAS MENÜ
 
 $2:
+set -u
+clear
 echo "$yellow########################################"
-read -t0.1
+sleep .1
 echo "###  Multi-install Script by Mobulos ###"
-read -t0.1
+sleep .1
 echo "########################################"
-read -t0.1
+sleep .1
 echo
 echo "Version 0.0.1"
 echo "Update 01.03.2020" #TODO Version und Datum ändern
@@ -85,17 +87,20 @@ echo
 log_warning "Dies ist die PRE-RELEASE Version, das Script verfügt noch nicht über alle Funktionen!"
 echo
 echo
-echo
-read -t0.1
-echo "Auswahlmöglichkeiten"
-read -t0.1
+sleep .5
+echo "Auswahlmöglichkeiten:"
+sleep .1
 tmp=($(tput setaf 3))
 echo -n "$tmp"
 echo "[1] soon"
 tmp=($(tput setaf 4))
 echo -n "$tmp"
-read -t0.1
+sleep .1
 echo "[2] Update"
+tmp=($(tput setaf 5))
+echo -n "$tmp"
+sleep .1
+echo "[3] Exit"
 read -n1 -p "Was willst du tun?: " befehl
 clear
 case $befehl in
@@ -104,8 +109,12 @@ case $befehl in
 	jumpto menue
 	;;
 2)
+	rm 20*
 	clear
 	jumpto update
+	;;
+3)
+	exit
 	;;
 *)
 	clear
@@ -133,10 +142,10 @@ elif [[ * ]]; then
 	curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh
 	# wget https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
 	echo "$reset"
-	read -t0.5
+	sleep .5
 	clear
 	log_success "Das Update wurde Erfolgreich heruntergeladen!"
-	read -t1
+	sleep 1
 	chmod +x multi-install.sh
 fi
 touch "$(date +%Y-%m-%d)"
