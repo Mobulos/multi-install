@@ -66,13 +66,12 @@ fi
 update:
 # CHECK, OB DAS SCRIPT HEUTE UPGEDATED WURDE
 if [ -f $(date +%Y-%m-%d) ]; then
-  # WENN HEUTE BEREITS UPGEDATED GEHE ZUM MENÜ
-  jumpto menue
-elif [[ * ]]; then
   # WENN HEUTE NICHT UPGEDATED GEHE WEITER
   clear
+elif [[ * ]]; then
+  # WENN HEUTE BEREITS UPGEDATED GEHE ZUM MENÜ
+  jumpto menue
 fi
-read -t 2 -n 1
 # LÖSCHE "ZULETZT UPGEDATED" DATEI
 rm 20*
 touch $(date +%Y-%m-%d)
@@ -90,4 +89,5 @@ exit
 # DAS MENÜ
 menue:
 log_success "test"
+echo hi
 exit
