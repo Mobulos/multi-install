@@ -115,7 +115,6 @@ case $befehl in
 	soon
 	;;
 2)
-	rm 20*
 	clear
 	jumpto update
 	;;
@@ -142,8 +141,7 @@ elif [[ * ]]; then
 	# WENN HEUTE NICHT UPGEDATED GEHE WEITER
 	# LÖSCHE "ZULETZT UPGEDATED" DATEI
 	touch "$(date +%Y-%m-%d)"
-	particular_script
-	rm 20*
+	rm 20* || :
 	clear
 	echo "$red Die neuste Version wird heruntergeladen"
 	curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh
