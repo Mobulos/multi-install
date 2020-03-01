@@ -88,7 +88,7 @@ elif [[ * ]]; then
 	echo "$red"
 	curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh --output multi-install.sh
 	echo "$reset"
-	read -t1
+	read -t0.5
 	chmod +x multi-install.sh
 	touch "$(date +%Y-%m-%d)"
 	./multi-install.sh
