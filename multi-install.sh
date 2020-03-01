@@ -11,8 +11,8 @@ function jumpto() {
 }
 
 # LEGE JUMPTOs AN
-update=${1:-"update"}
-menue=${2:-"menue"}
+menue=${1:-"menue"}
+update=${2:-"update"}
 # ---=${3:-"---"}
 # ---=${4:-"---"}
 # ---=${5:-"---"}
@@ -63,10 +63,15 @@ elif [[ * ]]; then
 	clear
 fi
 
+# DAS MENÜ
+
+menue:
+log_success "test"
+echo hi
+exit
+
 # UPDATE DAS SCRIPT
-
 $1:
-
 # CHECK, OB DAS SCRIPT HEUTE UPGEDATED WURDE
 if [ -f $(date +%Y-%m-%d) ]; then
 	# WENN HEUTE BEREITS UPGEDATED GEHE ZUM MENÜ
@@ -87,10 +92,3 @@ elif [[ * ]]; then
 	touch "$(date +%Y-%m-%d)"
 	./multi-install.sh
 fi
-
-# DAS MENÜ
-
-menue:
-log_success "test"
-echo hi
-exit
