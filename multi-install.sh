@@ -2,10 +2,10 @@
 
 # LADE "jumpto"
 function jumpto() {
-  label=$1
-  cmd=$(sed -n "/$label:/{:a;n;p;ba};" $0 | grep -v ':$')
-  eval "$cmd"
-  exit
+	label=$1
+	cmd=$(sed -n "/$label:/{:a;n;p;ba};" $0 | grep -v ':$')
+	eval "$cmd"
+	exit
 }
 
 # LADE DAS LOG FEATURE
@@ -33,8 +33,8 @@ update=${2:-"update"}
 FILE="/tmp/out.$$"
 GREP="/bin/grep"
 if [ "$(id -u)" != "0" ]; then
-  echo "Das Script muss als root gestartet werden." 1>&2
-  exit 1
+	echo "Das Script muss als root gestartet werden." 1>&2
+	exit 1
 fi
 
 # SETZE FARBCODES
@@ -45,31 +45,31 @@ reset=($(tput sgr0))
 
 # ÜBRPRÜFE OB ERSTER START
 if [ -f $(date +%Y-%m*) ]; then
-  # WENN NICHT ERSTER START:
-  clear
+	# WENN NICHT ERSTER START:
+	clear
 elif [[ * ]]; then
-  # WENN ERSTER START:
-  apt-get update
-  clear
-  apt-get upgrade -y
-  clear
-  apt-get install curl -y
-  clear
-  apt-get install wget -y
-  clear
-  apt-get install sudo -y
-  clear
+	# WENN ERSTER START:
+	apt-get update
+	clear
+	apt-get upgrade -y
+	clear
+	apt-get install curl -y
+	clear
+	apt-get install wget -y
+	clear
+	apt-get install sudo -y
+	clear
 fi
 
 # UPDATE DAS SCRIPT
 update:
 # CHECK, OB DAS SCRIPT HEUTE UPGEDATED WURDE
 if [ -f $(date +%Y-%m-%d) ]; then
-  # WENN HEUTE NICHT UPGEDATED GEHE WEITER
-  clear
+	# WENN HEUTE NICHT UPGEDATED GEHE WEITER
+	clear
 elif [[ * ]]; then
-  # WENN HEUTE BEREITS UPGEDATED GEHE ZUM MENÜ
-  jumpto menue
+	# WENN HEUTE BEREITS UPGEDATED GEHE ZUM MENÜ
+	jumpto menue
 fi
 # LÖSCHE "ZULETZT UPGEDATED" DATEI
 rm 20*
