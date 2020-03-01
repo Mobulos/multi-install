@@ -74,7 +74,7 @@ if [ -f $(date +%Y-%m-%d) ]; then
 elif [[ * ]]; then
 	# WENN HEUTE NICHT UPGEDATED GEHE WEITER
 	# LÖSCHE "ZULETZT UPGEDATED" DATEI
-	rm 20*
+	rm +%Y*
 	touch $(date +%Y-%m-%d)
 	clear
 	echo "$red Die neuste Version wird heruntergeladen"
