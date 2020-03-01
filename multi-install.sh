@@ -79,12 +79,12 @@ fi
 rm 20*
 touch $(date +%Y-%m-%d)
 clear
-# echo "$red Die neuste Version wird heruntergeladen"
-# echo "$reset"
+echo "$red Die neuste Version wird heruntergeladen"
+echo "$reset"
 rm multi-install.sh
-# echo "$red"
+echo "$red"
 curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh --output multi-install.sh
-# echo "$reset"
+echo "$reset"
 chmod +x multi-install.sh
 ./multi-install.sh
 exit
