@@ -44,7 +44,7 @@ yellow=($(tput setaf 3))
 reset=($(tput sgr0))
 
 # ÜBRPRÜFE OB ERSTER START
-if [ -f $(date +%Y*) ]; then
+if [ -f $(date +%Y-%m*) ]; then
   # WENN NICHT ERSTER START:
   jumpto update
 elif [[ * ]]; then
@@ -83,12 +83,11 @@ rm multi-install.sh
 echo "$red"
 curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh --output multi-install.sh
 echo "$reset"
-read -t 1
 chmod +x multi-install.sh
 ./multi-install.sh
 exit
 
 # DAS MENÜ
 menue:
-log_success test
+log_success "test"
 exit
