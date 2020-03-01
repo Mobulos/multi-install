@@ -73,20 +73,19 @@ if [ -f $(date +%Y-%m-%d) ]; then
 	jumpto menue
 elif [[ * ]]; then
 	# WENN HEUTE NICHT UPGEDATED GEHE WEITER
+	# LÖSCHE "ZULETZT UPGEDATED" DATEI
+	rm 20*
+	touch $(date +%Y-%m-%d)
 	clear
+	echo "$red Die neuste Version wird heruntergeladen"
+	echo "$reset"
+	rm multi-install.sh
+	echo "$red"
+	curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh --output multi-install.sh
+	echo "$reset"
+	chmod +x multi-install.sh
+	./multi-install.sh
 fi
-# LÖSCHE "ZULETZT UPGEDATED" DATEI
-rm 20*
-touch $(date +%Y-%m-%d)
-clear
-echo "$red Die neuste Version wird heruntergeladen"
-echo "$reset"
-rm multi-install.sh
-echo "$red"
-curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh --output multi-install.sh
-echo "$reset"
-chmod +x multi-install.sh
-./multi-install.sh
 
 # DAS MENÜ
 
