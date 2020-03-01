@@ -52,7 +52,8 @@ elif [[ * ]]; then
   apt-get install sudo -y
   clear
   # LADE DAS LOG FEATURE
-  wget ---
+  curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/log4bash.sh --output log4bash.sh
+  chmod +x log4bash.sh
   source log4bash.sh
   clear
   jumpto update
