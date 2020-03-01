@@ -77,7 +77,7 @@ elif [[ * ]]; then
 fi
 # LÖSCHE "ZULETZT UPGEDATED" DATEI
 rm 20*
-read -t 1
+read -t1
 touch $(date +%Y-%m-%d)
 clear
 echo "$red Die neuste Version wird heruntergeladen"
