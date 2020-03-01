@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # LADE "jumpto"
+
 function jumpto() {
 	label=$1
 	cmd=$(sed -n "/$label:/{:a;n;p;ba};" $0 | grep -v ':$')
