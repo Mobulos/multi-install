@@ -59,7 +59,6 @@ elif [[ * ]]; then
   clear
   apt-get install sudo -y
   clear
-  jumpto update
 fi
 
 # UPDATE DAS SCRIPT
