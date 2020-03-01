@@ -86,7 +86,7 @@ elif [[ * ]]; then
 	echo "$reset"
 	rm multi-install.sh
 	echo "$red"
-	curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh --output multi-install.sh
+	wget https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
 	echo "$reset"
 	read -t0.5
 	chmod +x multi-install.sh
