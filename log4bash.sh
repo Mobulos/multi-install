@@ -96,7 +96,7 @@ log_error() {
 	log "$1" "FEHLER" "${LOG_ERROR_COLOR}"
 	log_speak "$1"
 }
-log_warning() { log "$1" "WARNUNG" "${LOG_WARN_COLOR}"; }
+log_warning() { log "$1" "ACHTUNG" "${LOG_WARN_COLOR}"; }
 log_debug() { log "$1" "DEBUG" "${LOG_DEBUG_COLOR}"; }
 log_captains() {
 	if type -P figlet >/dev/null; then

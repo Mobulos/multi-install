@@ -65,8 +65,29 @@ fi
 # DAS MENÜ
 
 $2:
-log_success "test"
-echo hi
+echo "$yellow########################################"
+read -t 0.1
+echo "###  Multi-install Script by Mobulos ###"
+read -t 0.1
+echo "########################################"
+read -t 0.1
+echo
+echo "Version 0.0.1"
+echo "Update 01.03.2020" #TODO Version und Datum ändern
+echo "$reset"
+echo
+log_warning "Dies ist die PRE-RELEASE Version, das Script verfügt noch nicht über alle Funktionen!"
+echo
+echo
+echo
+read -t 0.1
+echo "Auswahlmöglichkeiten"
+read -t 0.1
+tmp=($(tput setaf 3))
+echo -n "$tmp"
+echo "[1] Backup erstellen"
+
+# log_success "test"
 exit
 
 # UPDATE DAS SCRIPT
