@@ -75,7 +75,7 @@ elif [[ * ]]; then
 	# WENN HEUTE NICHT UPGEDATED GEHE WEITER
 	# LÖSCHE "ZULETZT UPGEDATED" DATEI
 	rm +%Y*
-	touch $(date +%Y-%m-%d)
+	touch "$(date +%Y-%m-%d)"
 	clear
 	echo "$red Die neuste Version wird heruntergeladen"
 	echo "$reset"
