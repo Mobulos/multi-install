@@ -18,6 +18,10 @@ function soon() {
 	jumpto $menue
 }
 
+particular_script() {
+	false
+}
+
 # LEGE JUMPTOs AN
 menue=${1:-"menue"}
 update=${2:-"update"}
@@ -140,7 +144,7 @@ elif [[ * ]]; then
 	touch "$(date +%Y-%m-%d)"
 	particular_script || true
 	rm 20*
-	particular_script || false
+	particular_script
 	clear
 	echo "$red Die neuste Version wird heruntergeladen"
 	curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh
