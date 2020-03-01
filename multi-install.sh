@@ -15,7 +15,7 @@ function soon() {
 	log_warning "Diese Funktion wird später hinzugefügt!"
 	read -n1
 	clear
-	jumpto $menue
+	jumpto $1
 }
 
 particular_script() {
@@ -76,7 +76,7 @@ fi
 
 # DAS MENÜ
 
-$2:
+$1:
 set -u
 clear
 echo "$yellow########################################"
@@ -133,7 +133,7 @@ esac
 exit
 
 # UPDATE DAS SCRIPT
-$1:
+$2:
 # CHECK, OB DAS SCRIPT HEUTE UPGEDATED WURDE
 if [ -f $(date +%Y-%m-%d) ]; then
 	# WENN HEUTE BEREITS UPGEDATED GEHE ZUM MENÜ
@@ -142,9 +142,8 @@ elif [[ * ]]; then
 	# WENN HEUTE NICHT UPGEDATED GEHE WEITER
 	# LÖSCHE "ZULETZT UPGEDATED" DATEI
 	touch "$(date +%Y-%m-%d)"
-	particular_script || true
-	rm 20*
 	particular_script
+	rm 20*
 	clear
 	echo "$red Die neuste Version wird heruntergeladen"
 	curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh
