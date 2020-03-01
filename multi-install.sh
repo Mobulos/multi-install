@@ -35,7 +35,8 @@ clear
 FILE="/tmp/out.$$"
 GREP="/bin/grep"
 if [ "$(id -u)" != "0" ]; then
-	echo "Das Script muss als root gestartet werden." 1>&2
+	log_error "Das Script muss als root gestartet werden."
+	# echo "Das Script muss als root gestartet werden." 1>&2
 	exit 1
 fi
 
@@ -55,8 +56,10 @@ elif [[ * ]]; then
 	clear
 	apt-get upgrade -y
 
+	# INSTALLATION BENÖTIGTER PAKETE
 	for i in curl wget sudo screen; do
 		apt-get install $i -y
+		clear
 	done
 fi
 
@@ -88,6 +91,6 @@ elif [[ * ]]; then
 	echo "$reset"
 	read -t0.5
 	chmod +x multi-install.sh
-	touch "$(date +%Y-%m-%d)"
-	./multi-install.sh
 fi
+touch "$(date +%Y-%m-%d)"
+./multi-install.sh
