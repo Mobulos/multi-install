@@ -119,7 +119,7 @@ reset=($(tput sgr0))
 # ÜBRPRÜFE OB ERSTER START
 if [ -f $(date +%Y-%m*) ]; then
 	# WENN NICHT ERSTER START:
-	clear
+	update
 elif [[ * ]]; then
 	# WENN ERSTER START:
 	apt-get update
@@ -131,4 +131,5 @@ elif [[ * ]]; then
 		apt-get install $i -y
 		clear
 	done
+	update
 fi
