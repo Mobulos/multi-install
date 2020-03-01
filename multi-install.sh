@@ -74,8 +74,8 @@ if [ -f $(date +%Y-%m-%d) ]; then
 elif [[ * ]]; then
 	# WENN HEUTE NICHT UPGEDATED GEHE WEITER
 	# LÖSCHE "ZULETZT UPGEDATED" DATEI
-	rm +%Y*
 	touch "$(date +%Y-%m-%d)"
+	rm 20*
 	clear
 	echo "$red Die neuste Version wird heruntergeladen"
 	echo "$reset"
@@ -84,6 +84,7 @@ elif [[ * ]]; then
 	curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh --output multi-install.sh
 	echo "$reset"
 	chmod +x multi-install.sh
+	touch "$(date +%Y-%m-%d)"
 	./multi-install.sh
 fi
 
