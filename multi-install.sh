@@ -103,6 +103,7 @@ sleep .1
 echo "[3] Exit"
 read -n1 -p "Was willst du tun?: " befehl
 clear
+echo -n "$reset"
 case $befehl in
 1)
 	soon
