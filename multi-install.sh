@@ -1,7 +1,7 @@
 #!/bin/bash
 # Init
 
-function menue() {
+function menue {
 	set -u
 	clear
 	echo "$yellow########################################"
@@ -55,7 +55,7 @@ function menue() {
 
 }
 
-function update() {
+function update {
 	# CHECK, OB DAS SCRIPT HEUTE UPGEDATED WURDE
 	if [ -f $(date +%Y-%m-%d) ]; then
 		# WENN HEUTE BEREITS UPGEDATED GEHE ZUM MENÜ
@@ -82,7 +82,7 @@ function update() {
 
 }
 
-function soon() {
+function soon {
 	clear
 	log_warning "Diese Funktion wird später hinzugefügt!"
 	read -n1
