@@ -14,6 +14,8 @@ function soon() {
 	clear
 	log_warning "Diese Funktion wird später hinzugefügt!"
 	read -n1
+	clear
+	jumpto $menue
 }
 
 # LEGE JUMPTOs AN
@@ -107,7 +109,6 @@ echo -n "$reset"
 case $befehl in
 1)
 	soon
-	jumpto menue
 	;;
 2)
 	rm 20*
@@ -137,7 +138,9 @@ elif [[ * ]]; then
 	# WENN HEUTE NICHT UPGEDATED GEHE WEITER
 	# LÖSCHE "ZULETZT UPGEDATED" DATEI
 	touch "$(date +%Y-%m-%d)"
+	particular_script || true
 	rm 20*
+	particular_script || false
 	clear
 	echo "$red Die neuste Version wird heruntergeladen"
 	curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh
