@@ -10,6 +10,12 @@ function jumpto() {
 	exit
 }
 
+function soon() {
+	clear
+	log_warning "Diese Funktion wird später hinzugefügt!"
+	read -n1
+}
+
 # LEGE JUMPTOs AN
 menue=${1:-"menue"}
 update=${2:-"update"}
@@ -85,7 +91,28 @@ echo "Auswahlmöglichkeiten"
 read -t 0.1
 tmp=($(tput setaf 3))
 echo -n "$tmp"
-echo "[1] Backup erstellen"
+echo "[1] soon"
+tmp=($(tput setaf 4))
+echo -n "$tmp"
+read -t0.1
+echo "[2] Update"
+read -n1 -p "Was willst du tun?: " befehl
+clear
+case $befehl in
+1)
+	soon
+	jumpto menue
+	;;
+2)
+	clear
+	jumpto update
+	;;
+*)
+	clear
+	log_error "Du musst dich vertippt haben..."
+	jumpto menue
+	;;
+esac
 
 # log_success "test"
 exit
