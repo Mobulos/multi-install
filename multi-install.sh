@@ -11,7 +11,7 @@ function menue {
 	echo "########################################"
 	sleep .1
 	echo
-	echo "Version 0.0.4"
+	echo "Version 0.0.5"
 	echo "Update 02.03.2020" #TODO Version und Datum ändern
 	echo "$reset"
 	echo
