@@ -35,8 +35,7 @@ clear
 FILE="/tmp/out.$$"
 GREP="/bin/grep"
 if [ "$(id -u)" != "0" ]; then
-	log_error "Das Script muss als root gestartet werden."
-	# echo "Das Script muss als root gestartet werden." 1>&2
+	log_warning "Das Script muss als root gestartet werden."
 	exit 1
 fi
 
@@ -83,9 +82,6 @@ elif [[ * ]]; then
 	rm 20*
 	clear
 	echo "$red Die neuste Version wird heruntergeladen"
-	echo "$reset"
-	rm multi-install.sh
-	echo "$red"
 	curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh
 	# wget https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
 	echo "$reset"
