@@ -15,7 +15,7 @@ function soon() {
 	log_warning "Diese Funktion wird später hinzugefügt!"
 	read -n1
 	clear
-	jumpto $1
+	jumpto menue
 }
 
 particular_script() {
