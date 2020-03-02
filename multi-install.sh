@@ -4,11 +4,11 @@
 function menue {
 	set -u
 	clear
-	echo "$yellow########################################"
+	echo "$yellow##########################################"
 	sleep .1
-	echo "###  Multi-install Script by Mobulos ###"
+	echo "####  Multi-install Script by Mobulos ####"
 	sleep .1
-	echo "########################################"
+	echo "##########################################"
 	sleep .1
 	echo
 	echo "Version 0.0.5"
