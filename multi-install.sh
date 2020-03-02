@@ -4,7 +4,7 @@
 # LADE DAS LOG FEATURE
 rm .log4bash.sh
 clear
-curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/log4bash.sh
+curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/log4bash.sh -o log4bash.sh
 chmod +x .log4bash.sh
 source .log4bash.sh
 clear
@@ -77,7 +77,7 @@ function update {
 		echo "$red Die neuste Version wird heruntergeladen"
 		rm multi-install.sh
 		# curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh
-		wget https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -O multi-install.sh
+		wget https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
 		sleep 2
 		echo "$reset"
 		sleep .5
