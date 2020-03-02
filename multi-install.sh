@@ -1,6 +1,14 @@
 #!/bin/bash
 # Init
 
+# LADE DAS LOG FEATURE
+rm .log4bash.sh
+clear
+curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/log4bash.sh
+chmod +x .log4bash.sh
+source .log4bash.sh
+clear
+
 function menue {
 	set -u
 	clear
@@ -11,7 +19,7 @@ function menue {
 	echo "##########################################"
 	sleep .1
 	echo
-	echo "Version 0.0.9"
+	echo "Version 0.1.0"
 	echo "Update 02.03.2020" #TODO Version und Datum ändern
 	echo "$reset"
 	echo
@@ -92,13 +100,6 @@ function soon {
 }
 
 
-# LADE DAS LOG FEATURE
-rm .log4bash.sh
-clear
-curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/log4bash.sh
-chmod +x .log4bash.sh
-source .log4bash.sh
-clear
 
 # ROOT CHECK
 FILE="/tmp/out.$$"
