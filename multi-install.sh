@@ -6,7 +6,7 @@ function menue {
 	clear
 	echo "$yellow##########################################"
 	sleep .1
-	echo "####  Multi-install Script by Mobulos ####"
+	echo "#### Multi-install  Script by Mobulos ####"
 	sleep .1
 	echo "##########################################"
 	sleep .1
