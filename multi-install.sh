@@ -11,7 +11,7 @@ function menue {
 	echo "##########################################"
 	sleep .1
 	echo
-	echo "Version 0.0.8"
+	echo "Version 0.0.9"
 	echo "Update 02.03.2020" #TODO Version und Datum ändern
 	echo "$reset"
 	echo
@@ -67,7 +67,7 @@ function update {
 		rm 20* || :
 		clear
 		echo "$red Die neuste Version wird heruntergeladen"
-		# rm multi-install.sh
+		rm multi-install.sh
 		# curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh
 		wget https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -O multi-install.sh
 		sleep 2
