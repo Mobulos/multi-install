@@ -22,7 +22,7 @@ This is a script template.  Edit this description to print help to users.
 
 ############################################
 ################# CHANGE ###################
-ver=0.1.2
+ver=0.1.3
 dat=06.03.2020
 ############################################
 ############################################
@@ -73,45 +73,27 @@ function menue () {
 	set -u
 	clear
 	pre
+	sleep .5
 	echo "Auswahlmöglichkeiten:"
-	n=1
-	select befehl in soon Update Einstellungen Exit
-	do
-		sleep .1
-		tmp=($(tput setaf $n))
-		echo -n "$tmp"
-		echo "[$n] $befehl"
-		(( ++n ))
-	done
-	# sleep .5
-	# echo "Auswahlmöglichkeiten:"
-
-	# sleep .1
-	# tmp=($(tput setaf 3))
-	# echo -n "$tmp"
-	# echo "[1] soon"
-
-	# sleep .1
-	# tmp=($(tput setaf 4))
-	# echo -n "$tmp"
-	# echo "[2] Update"
-
-	# sleep .1
-	# tmp=($(tput setaf 5))
-	# echo -n "$tmp"	
-	# echo "[3] Einstellungen"
-
-	# sleep .1
-	# tmp=($(tput setaf 5))
-	# echo -n "$tmp"
-	# echo "[4] Exit"
-
+	sleep .1
+	tmp=($(tput setaf 3))
+	echo -n "$tmp"
+	echo "[1] Einstellungen"
+	tmp=($(tput setaf 4))
+	echo -n "$tmp"
+	sleep .1
+	echo "[2] Update"
+	tmp=($(tput setaf 5))
+	echo -n "$tmp"
+	sleep .1
+	echo "[3] Exit"
 	read -n1 -p "Was willst du tun?: " befehl
 	clear
 	echo -n "$reset"
 	case $befehl in
 	1)
-		soon
+		clear
+		settings
 		;;
 	2)
 		rm 20*
@@ -150,7 +132,7 @@ function update () {
 		rm 20* || :
 		clear
 		echo "$red Die neuste Version wird heruntergeladen"
-		rm multi-install.sh
+		rm multi-install-beta.sh
 		# curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh
 		wget https://raw.githubusercontent.com/Mobulos/multi-install/develop/multi-install-beta.sh
 		sleep 2
@@ -159,10 +141,10 @@ function update () {
 		clear
 		log_success "Das Update wurde Erfolgreich heruntergeladen!"
 		sleep 1
-		chmod +x multi-install.sh
+		chmod +x multi-install-beta.sh
 	fi
 	touch "$(date +%Y-%m-%d)"
-	./multi-install.sh
+	./multi-install-beta.sh
 
 }
 
@@ -173,8 +155,6 @@ function soon () {
 	clear
 	menue
 }
-
-
 
 
 
