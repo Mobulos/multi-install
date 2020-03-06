@@ -1,23 +1,6 @@
 #!/bin/bash
 # Init
 
-# Print usage
-usage() {
-  echo -n "${scriptName} [OPTION]... [FILE]...
-This is a script template.  Edit this description to print help to users.
- ${bold}Options:${reset}
-  -u, --username    Username for script
-  -p, --password    User password
-  --force           Skip all user interaction.  Implied 'Yes' to all actions.
-  -q, --quiet       Quiet (no output)
-  -l, --log         Print log to file
-  -s, --strict      Exit script with null variables.  i.e 'set -o nounset'
-  -v, --verbose     Output more information. (Items echoed to 'verbose')
-  -d, --debug       Runs script in BASH debug mode (set -x)
-  -h, --help        Display this help and exit
-      --version     Output version information and exit
-"
-}
 
 # LADE DAS LOG FEATURE
 rm .log4bash.sh
