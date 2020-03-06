@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=0.1.6
+ver=0.1.7
 dat=06.03.2020
 ############################################
 ############################################
@@ -33,7 +33,11 @@ source .log4bash.sh
 clear
 
 function exit () {
+	clear
 	exit 0
+	echo "Das hat nicht Funktioniert..."
+	echo 'Du kannst das Script jedoch JEDERZEIT mit "STRG" + "C" ("CTRL" + "C") beenden!'
+	exit 1
 }
 
 function pre () {
