@@ -1,6 +1,6 @@
 #!/bin/bash
 # Init
-
+#test
 # Print usage
 usage() {
   echo -n "${scriptName} [OPTION]... [FILE]...
