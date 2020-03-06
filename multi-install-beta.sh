@@ -4,8 +4,8 @@
 
 ############################################
 ################# CHANGE ###################
-ver=0.1.7
-dat=06.03.2020
+ver=0.1.8
+dat=07.03.2020
 ############################################
 ############################################
 
@@ -158,10 +158,11 @@ function update () {
 		clear
 		echo "$red Die neuste Version wird heruntergeladen"
 		rm multi-install-beta.sh
-		# curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh
-		wget https://raw.githubusercontent.com/Mobulos/multi-install/develop/multi-install-beta.sh
+		curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/develop/multi-install-beta.sh -o multi-install-beta.sh.1
+		# wget https://raw.githubusercontent.com/Mobulos/multi-install/develop/multi-install-beta.sh
 		sleep 2
 		echo "$reset"
+		rm multi-install-beta.sh
 		mv multi-install-beta.sh.1 multi-install-beta.sh
 		clear
 		log_success "Das Update wurde Erfolgreich heruntergeladen!"
