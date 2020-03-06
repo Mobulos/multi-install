@@ -152,7 +152,7 @@ function update () {
 		echo "$red Die neuste Version wird heruntergeladen"
 		rm multi-install.sh
 		# curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh
-		wget https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
+		wget https://raw.githubusercontent.com/Mobulos/multi-install/develop/multi-install-beta.sh
 		sleep 2
 		echo "$reset"
 		sleep .5
