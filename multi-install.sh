@@ -1,6 +1,7 @@
 #!/bin/bash
 # Init
 
+
 # LADE DAS LOG FEATURE
 rm .log4bash.sh
 clear
