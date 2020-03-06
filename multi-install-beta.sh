@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=0.1.5
+ver=0.1.6
 dat=06.03.2020
 ############################################
 ############################################
@@ -31,6 +31,10 @@ curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/mast
 chmod +x .log4bash.sh
 source .log4bash.sh
 clear
+
+function exit () {
+	exit 0
+}
 
 function pre () {
 	echo "$yellow##########################################"
@@ -90,7 +94,7 @@ function menue () {
 		update
 		;;
 	3)
-		exit 1
+		exit
 		;;
 	*)
 		clear
@@ -110,11 +114,19 @@ function settings () {
 			|  _|    | |  |  \| | \___ \    | |   |  _|   | |     | |     | | | | |  \| | | |  _  |  _|   |  \| |
 			| |___   | |  | |\  |  ___) |   | |   | |___  | |___  | |___  | |_| | | |\  | | |_| | | |___  | |\  |
 			|_____| |___| |_| \_| |____/    |_|   |_____| |_____| |_____|  \___/  |_| \_|  \____| |_____| |_| \_|
-                                                                                                      
 "
 	echo
 	echo
-	echo
+	sleep .5
+	echo "Auswahlmöglichkeiten:"
+	sleep .1
+	tmp=($(tput setaf 4))
+	echo -n "$tmp"
+	echo "[1] Einstellungen"
+	tmp=($(tput setaf 5))
+	echo -n "$tmp"
+	sleep .1
+	echo "[2] Update"
 		
 	read -n1
 }
