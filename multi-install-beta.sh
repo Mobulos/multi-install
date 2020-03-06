@@ -1,6 +1,6 @@
 #!/bin/bash
 # Init
-#test
+
 # Print usage
 usage() {
   echo -n "${scriptName} [OPTION]... [FILE]...
@@ -19,6 +19,29 @@ This is a script template.  Edit this description to print help to users.
 "
 }
 
+
+############################################
+################# CHANGE ###################
+ver=0.1.2
+dat=06.03.2020
+############################################
+############################################
+
+# ROOT CHECK
+FILE="/tmp/out.$$"
+GREP="/bin/grep"
+if [ "$(id -u)" != "0" ]; then
+	log_warning "Das Script muss als root gestartet werden."
+	exit 1
+fi
+
+# SETZE FARBCODES
+red=($(tput setaf 1))
+green=($(tput setaf 2))
+yellow=($(tput setaf 3))
+reset=($(tput sgr0))
+
+
 # LADE DAS LOG FEATURE
 rm .log4bash.sh
 clear
@@ -27,37 +50,62 @@ chmod +x .log4bash.sh
 source .log4bash.sh
 clear
 
-function menue {
-	set -u
-	clear
+function pre () {
 	echo "$yellow##########################################"
 	sleep .1
-	echo "#### Multi-install  Script by Mobulos ####"
+	echo "#### Multi-Install  Script By Mobulos ####"
 	sleep .1
 	echo "##########################################"
 	sleep .1
 	echo
-	echo "Version 0.1.1"
-	echo "Update 02.03.2020" #TODO Version und Datum ändern
+	echo "Version $ver"
+	echo "Update $dat" #TODO Version und Datum ändern
 	echo "$reset"
 	echo
 	log_warning "Dies ist die PRE-RELEASE Version, das Script verfügt noch nicht über alle Funktionen!"
 	echo
 	echo
-	sleep .5
+
+}
+
+
+function menue () {
+	set -u
+	clear
+	pre
 	echo "Auswahlmöglichkeiten:"
-	sleep .1
-	tmp=($(tput setaf 3))
-	echo -n "$tmp"
-	echo "[1] soon"
-	tmp=($(tput setaf 4))
-	echo -n "$tmp"
-	sleep .1
-	echo "[2] Update"
-	tmp=($(tput setaf 5))
-	echo -n "$tmp"
-	sleep .1
-	echo "[3] Exit"
+	n=1
+	select befehl in soon Update Einstellungen Exit
+	do
+		sleep .1
+		tmp=($(tput setaf $n))
+		echo -n "$tmp"
+		echo "[$n] $befehl"
+		(( ++n ))
+	done
+	# sleep .5
+	# echo "Auswahlmöglichkeiten:"
+
+	# sleep .1
+	# tmp=($(tput setaf 3))
+	# echo -n "$tmp"
+	# echo "[1] soon"
+
+	# sleep .1
+	# tmp=($(tput setaf 4))
+	# echo -n "$tmp"
+	# echo "[2] Update"
+
+	# sleep .1
+	# tmp=($(tput setaf 5))
+	# echo -n "$tmp"	
+	# echo "[3] Einstellungen"
+
+	# sleep .1
+	# tmp=($(tput setaf 5))
+	# echo -n "$tmp"
+	# echo "[4] Exit"
+
 	read -n1 -p "Was willst du tun?: " befehl
 	clear
 	echo -n "$reset"
@@ -70,6 +118,9 @@ function menue {
 		update
 		;;
 	3)
+		echo "comming soon!"
+		;;
+	4)
 		exit 1
 		;;
 	*)
@@ -81,7 +132,13 @@ function menue {
 
 }
 
-function update {
+function settings () {
+	pre
+	sleep .5
+	echo "Auswahlmöglichkeiten:"	
+}
+
+function update () {
 	# CHECK, OB DAS SCRIPT HEUTE UPGEDATED WURDE
 	if [ -f $(date +%Y-%m-%d) ]; then
 		# WENN HEUTE BEREITS UPGEDATED GEHE ZUM MENÜ
@@ -109,7 +166,7 @@ function update {
 
 }
 
-function soon {
+function soon () {
 	clear
 	log_warning "Diese Funktion wird später hinzugefügt!"
 	read -n1
@@ -119,19 +176,7 @@ function soon {
 
 
 
-# ROOT CHECK
-FILE="/tmp/out.$$"
-GREP="/bin/grep"
-if [ "$(id -u)" != "0" ]; then
-	log_warning "Das Script muss als root gestartet werden."
-	exit 1
-fi
 
-# SETZE FARBCODES
-red=($(tput setaf 1))
-green=($(tput setaf 2))
-yellow=($(tput setaf 3))
-reset=($(tput sgr0))
 
 # ÜBRPRÜFE OB ERSTER START
 if [ -f $(date +%Y-%m*) ]; then
