@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=0.2.2
+ver=0.2.3
 dat=07.03.2020
 file=multi-install-beta.sh
 ############################################
@@ -159,12 +159,13 @@ developer () {
 		echo
 		read -n1 -p "Möchtest du zuräck zur release Version (slow) [Y/N] " versionl
 		case $versionl in
-		Y | y | J | j)
-		rm .dev
-		rm 20*
-		clear
-		echo "Du erhältst nun keine Developer-Versionen mehr!"
-		sleep 3
+			Y | y | J | j)
+			# DEVOLOPER STAY
+			rm .dev
+			rm 20*
+			clear
+			echo "Du erhältst nun keine Developer-Versionen mehr!"
+			sleep 3
 			touch "$(date +%Y-%m-%d)"
 			rm 20*
 			clear
@@ -179,45 +180,46 @@ developer () {
 			log_success "Das Update wurde Erfolgreich heruntergeladen!"
 			sleep 1
 			chmod +x multi-install.sh
-		./multi-install.sh
-		exit
-		;;
-		N | n)
-		echo "Du erhälstst weiterhin Developer Updates."
-		sleep 3
-		./$file
-		exit
-		;;
-		*)
-		clear
-		read -n1 "Eingabe nicht erkannt"
-		jumpto settings
-		exit
-		;;
+			./multi-install.sh
+			exit
+			;;
+			N | n)
+			echo "Du erhälstst weiterhin Developer Updates."
+			sleep 3
+			./$file
+			exit
+			;;
+			*)
+			clear
+			read -n1 "Eingabe nicht erkannt"
+			jumpto settings
+			exit
+			;;
 		esac
   elif [[ * ]]; then
-    read -n1 -p "Möchtest du jetzt die Developer-Version erhalten? (Y/N) " versionj
+    read -n1 -p "Möchtest du jetzt die Developer-Version erhalten?(fast) (Y/N) " versionj
     case $versionj in
     Y | y | j | J)
-      touch .dev
-      rm 20*
-      clear
-      echo "Du erhälst ab jetzt die neuste (Alpha) Version!"
-      sleep 3
-			touch "$(date +%Y-%m-%d)"
-			rm 20*
-			clear
-			echo "$red Die neuste Version wird heruntergeladen"
-			rm multi-install*
-			curl --progress-bar hhttps://raw.githubusercontent.com/Mobulos/multi-install/develop/multi-install-beta.sh -o multi-install-beta.sh.1
-			# wget https://raw.githubusercontent.com/Mobulos/multi-install/develop/multi-install-beta.sh
-			sleep 2
-			echo "$reset"
-			mv multi-install-beta.sh.1 multi-install-beta.sh
-			clear
-			log_success "Das Update wurde Erfolgreich heruntergeladen!"
-			sleep 1
-			chmod +x multi-install-beta.sh
+		touch .dev
+		rm 20*
+		clear
+		echo "Du erhälst ab jetzt die neuste (Alpha) Version!"
+		sleep 3
+		# SWITCH TO DEVELOPER
+		touch "$(date +%Y-%m-%d)"
+		rm 20*
+		clear
+		echo "$red Die neuste Version wird heruntergeladen"
+		rm multi-install*
+		curl --progress-bar hhttps://raw.githubusercontent.com/Mobulos/multi-install/develop/multi-install-beta.sh -o multi-install-beta.sh.1
+		# wget https://raw.githubusercontent.com/Mobulos/multi-install/develop/multi-install-beta.sh
+		sleep 2
+		echo "$reset"
+		mv multi-install-beta.sh.1 multi-install-beta.sh
+		clear
+		log_success "Das Update wurde Erfolgreich heruntergeladen!"
+		sleep 1
+		chmod +x multi-install-beta.sh
 		./multi-install-beta.sh
       exit
       ;;
@@ -232,7 +234,7 @@ developer () {
     *)
       clear
       read -n1 "Eingabe nicht erkannt"
-      jumpto settings
+      developer
       exit
       ;;
     esac
