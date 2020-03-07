@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=0.2.3
+ver=0.2.5
 dat=07.03.2020
 file=multi-install-beta.sh
 ############################################
@@ -33,7 +33,7 @@ chmod +x .log4bash.sh
 source .log4bash.sh
 clear
 
-function exit () {
+function exitf () {
 	clear
 	echo 'Wenn das Script nicht korrekt beendet wurde kannst du es JEDERZEIT mit "STRG" + "C" ("CTRL" + "C") beenden!'
 	exit 0
@@ -98,7 +98,7 @@ function menue () {
 		update
 		;;
 	3)
-		exit
+		continue
 		;;
 	*)
 		clear
@@ -107,7 +107,7 @@ function menue () {
 		menue
 		;;
 	esac
-
+exitf
 }
 
 function settings () {
@@ -138,7 +138,7 @@ function settings () {
 	case $befehl in
 	1)
 		developer
-		exit
+		exitf
 		;;
 	2)
 		resume
@@ -181,19 +181,19 @@ developer () {
 			sleep 1
 			chmod +x multi-install.sh
 			./multi-install.sh
-			exit
+			exitf
 			;;
 			N | n)
 			echo "Du erhälstst weiterhin Developer Updates."
 			sleep 3
 			./$file
-			exit
+			exitf
 			;;
 			*)
 			clear
 			read -n1 "Eingabe nicht erkannt"
 			jumpto settings
-			exit
+			exitf
 			;;
 		esac
   elif [[ * ]]; then
@@ -211,7 +211,7 @@ developer () {
 		clear
 		echo "$red Die neuste Version wird heruntergeladen"
 		rm multi-install*
-		curl --progress-bar hhttps://raw.githubusercontent.com/Mobulos/multi-install/develop/multi-install-beta.sh -o multi-install-beta.sh.1
+		curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/develop/multi-install-beta.sh -o multi-install-beta.sh.1
 		# wget https://raw.githubusercontent.com/Mobulos/multi-install/develop/multi-install-beta.sh
 		sleep 2
 		echo "$reset"
@@ -221,7 +221,7 @@ developer () {
 		sleep 1
 		chmod +x multi-install-beta.sh
 		./multi-install-beta.sh
-      exit
+      exitf
       ;;
     N | n)
       rm 20*
@@ -229,13 +229,13 @@ developer () {
       echo "Du erhältst weiterhin die offizielle Version!"
       sleep 3
       ./$file
-      exit
+      exitf
       ;;
     *)
       clear
       read -n1 "Eingabe nicht erkannt"
       developer
-      exit
+      exitf
       ;;
     esac
 
@@ -317,4 +317,4 @@ elif [[ * ]]; then
 fi
 
 menue
-exit
+exitf
