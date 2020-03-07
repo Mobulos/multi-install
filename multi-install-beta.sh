@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=0.2.6
+ver=0.2.7
 dat=07.03.2020
 file=multi-install-beta.sh
 ############################################
@@ -23,6 +23,15 @@ red=($(tput setaf 1))
 green=($(tput setaf 2))
 yellow=($(tput setaf 3))
 reset=($(tput sgr0))
+tput1=($(tput setaf 1))
+tput2=($(tput setaf 2))
+tput3=($(tput setaf 3))
+tput4=($(tput setaf 4))
+tput5=($(tput setaf 5))
+tput6=($(tput setaf 6))
+tput7=($(tput setaf 7))
+tput8=($(tput setaf 8))
+tput9=($(tput setaf 9))
 
 
 # LADE DAS LOG FEATURE
@@ -84,22 +93,22 @@ function menue () {
 	clear
 	pre
 	sleep .5
-	echo "Auswahlmöglichkeiten:"
+	echo " Auswahlmöglichkeiten:"
 	sleep .1
-	tmp=($(tput setaf 4))
-	echo -n "$tmp"
-	echo "[1] Einstellungen"
-	tmp=($(tput setaf 5))
-	echo -n "$tmp"
+	# tmp=($(tput setaf 4))
+	# echo -n "$tmp"
+	echo "$tput4 [1] Einstellungen"
+	# tmp=($(tput setaf 5))
+	# echo -n "$tmp"
 	sleep .1
-	echo "[2] Update"
-	tmp=($(tput setaf 6))
-	echo -n "$tmp"
+	echo "$tput5 [2] Update"
+	# tmp=($(tput setaf 6))
+	# echo -n "$tmp"
 	sleep .1
-	echo "[3] Exit"
-	tmp=($(tput setaf 3))
-	echo -n "$tmp"
-	read -n1 -p "Was willst du tun?: " befehl
+	echo "$tput6 [3] Exit"
+	# tmp=($(tput setaf 3))
+	# echo -n "$tmp"
+	read -n1 -p "$tput3 Was willst du tun?: " befehl
 	clear
 	echo -n "$reset"
 	case $befehl in
@@ -211,6 +220,7 @@ developer () {
 			exitf
 			;;
 			N | n)
+			clear
 			echo "Du erhälstst weiterhin Developer Updates."
 			sleep 3
 			./$file
