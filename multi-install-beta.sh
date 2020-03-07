@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=0.2.8
+ver=0.2.9.2
 dat=07.03.2020
 file=multi-install-beta.sh
 ############################################
@@ -93,7 +93,7 @@ function menue () {
 	clear
 	pre
 	sleep .5
-	echo " Auswahlmöglichkeiten:"
+	echo "Auswahlmöglichkeiten:"
 	sleep .1
 	# tmp=($(tput setaf 4))
 	# echo -n "$tmp"
@@ -108,7 +108,8 @@ function menue () {
 	echo "$tput6 [3] Exit"
 	# tmp=($(tput setaf 3))
 	# echo -n "$tmp"
-	read -n1 -p "$tput3 Was willst du tun?: " befehl
+	echo -n "$tput3"
+	read -n1 -p "Was willst du tun?: " befehl
 	clear
 	echo -n "$reset"
 	case $befehl in
@@ -125,7 +126,7 @@ function menue () {
 	*)
 		clear
 		log_error "Du musst dich vertippt haben..."
-		read -t2 -n1
+		sleep 2
 		menue
 		;;
 	esac
@@ -176,7 +177,7 @@ function settings () {
 	*)
 		clear
 		log_error "Du musst dich vertippt haben..."
-		read -t2 -n1
+		sleep 2
 		settings
 		;;
 	esac
