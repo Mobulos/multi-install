@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=0.2.0
+ver=0.2.1
 dat=07.03.2020
 file=multi-install-beta.sh
 ############################################
@@ -199,7 +199,7 @@ developer () {
     read -n1 -p "Möchtest du jetzt die Developer-Version erhalten? (Y/N) " versionj
     case $versionj in
     Y | y | j | J)
-      touch .alpha
+      touch .dev
       rm 20*
       clear
       echo "Du erhälst ab jetzt die neuste (Alpha) Version!"
