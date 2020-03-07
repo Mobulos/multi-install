@@ -4,8 +4,9 @@
 
 ############################################
 ################# CHANGE ###################
-ver=0.1.8
+ver=0.2.0
 dat=07.03.2020
+file=multi-install-beta.sh
 ############################################
 ############################################
 
@@ -34,10 +35,9 @@ clear
 
 function exit () {
 	clear
+	echo 'Wenn das Script nicht korrekt beendet wurde kannst du es JEDERZEIT mit "STRG" + "C" ("CTRL" + "C") beenden!'
 	exit 0
-	echo "Das hat nicht Funktioniert..."
-	echo 'Du kannst das Script jedoch JEDERZEIT mit "STRG" + "C" ("CTRL" + "C") beenden!'
-	exit 1
+	sleep 5
 }
 
 function pre () {
@@ -48,7 +48,7 @@ function pre () {
 	echo "##########################################"
 	sleep .1
 	echo
-	echo "$red""DEVELOPER "$reset"Version $ver"
+	echo "$red""[DEVELOPER] "$reset"Version $ver"
 	echo "Update $dat"
 	echo "$reset"
 	echo
@@ -113,29 +113,132 @@ function menue () {
 function settings () {
 	pre
 	sleep .5
-	 echo "  _____   ___   _   _   ____    _____   _____   _       _       _   _   _   _    ____   _____   _   _ 
-			| ____| |_ _| | \ | | / ___|  |_   _| | ____| | |     | |     | | | | | \ | |  / ___| | ____| | \ | |
-			|  _|    | |  |  \| | \___ \    | |   |  _|   | |     | |     | | | | |  \| | | |  _  |  _|   |  \| |
-			| |___   | |  | |\  |  ___) |   | |   | |___  | |___  | |___  | |_| | | |\  | | |_| | | |___  | |\  |
-			|_____| |___| |_| \_| |____/    |_|   |_____| |_____| |_____|  \___/  |_| \_|  \____| |_____| |_| \_|
-"
+	 echo " _____   ___   _   _   ____    _____   _____   _       _       _   _   _   _    ____   _____   _   _"
+	 echo "| ____| |_ _| | \ | | / ___|  |_   _| | ____| | |     | |     | | | | | \ | |  / ___| | ____| | \ | |"
+	 echo "|  _|    | |  |  \| | \___ \    | |   |  _|   | |     | |     | | | | |  \| | | |  _  |  _|   |  \| |"
+	 echo "| |___   | |  | |\  |  ___) |   | |   | |___  | |___  | |___  | |_| | | |\  | | |_| | | |___  | |\  |"
+	 echo "|_____| |___| |_| \_| |____/    |_|   |_____| |_____| |_____|  \___/  |_| \_|  \____| |_____| |_| \_|"
 	echo
 	echo
 	sleep .5
+	echo -n "$reset"
 	echo "Auswahlmöglichkeiten:"
 	sleep .1
 	tmp=($(tput setaf 4))
 	echo -n "$tmp"
-	echo "[1] Einstellungen"
-	tmp=($(tput setaf 5))
-	echo -n "$tmp"
+	echo "[1] Developer Updates"
 	sleep .1
-	echo "[2] Update"
-		
-	read -n1
+	tmp=($(tput setaf 6))
+	echo -n "$tmp"
+	echo "[2] Zurück"
+	echo -n "$reset"
+	read -n1 -p "Was willst du tun?: " befehl
+	clear
+	echo -n "$reset"
+	case $befehl in
+	1)
+		developer
+		exit
+		;;
+	2)
+		resume
+		;;
+	*)
+		clear
+		log_error "Du musst dich vertippt haben..."
+		read -t2 -n1
+		settings
+		;;
+	esac
 }
 
+developer () {
+	clear
+	if [ -f ".dev" ]; then
+		echo "Du erhälst bereits die Developer Version (fast)"
+		echo
+		read -n1 -p "Möchtest du zuräck zur release Version (slow) [Y/N] " versionl
+		case $versionl in
+		Y | y | J | j)
+		rm .dev
+		rm 20*
+		clear
+		echo "Du erhältst nun keine Developer-Versionen mehr!"
+		sleep 3
+			touch "$(date +%Y-%m-%d)"
+			rm 20*
+			clear
+			echo "$red Die neuste Version wird heruntergeladen"
+			rm multi-install*
+			curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh.1
+			# wget https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
+			sleep 2
+			echo "$reset"
+			mv multi-install.sh.1 multi-install.sh
+			clear
+			log_success "Das Update wurde Erfolgreich heruntergeladen!"
+			sleep 1
+			chmod +x multi-install.sh
+		./multi-install.sh
+		exit
+		;;
+		N | n)
+		echo "Du erhälstst weiterhin Developer Updates."
+		sleep 3
+		./$file
+		exit
+		;;
+		*)
+		clear
+		read -n1 "Eingabe nicht erkannt"
+		jumpto settings
+		exit
+		;;
+		esac
+  elif [[ * ]]; then
+    read -n1 -p "Möchtest du jetzt die Developer-Version erhalten? (Y/N) " versionj
+    case $versionj in
+    Y | y | j | J)
+      touch .alpha
+      rm 20*
+      clear
+      echo "Du erhälst ab jetzt die neuste (Alpha) Version!"
+      sleep 3
+			touch "$(date +%Y-%m-%d)"
+			rm 20*
+			clear
+			echo "$red Die neuste Version wird heruntergeladen"
+			rm multi-install*
+			curl --progress-bar https://github.com/Mobulos/multi-install/blob/develop/multi-install-beta.sh -o multi-install-beta.sh.1
+			# wget https://github.com/Mobulos/multi-install/blob/develop/multi-install-beta.sh
+			sleep 2
+			echo "$reset"
+			mv multi-install-beta.sh.1 multi-install-beta.sh
+			clear
+			log_success "Das Update wurde Erfolgreich heruntergeladen!"
+			sleep 1
+			chmod +x multi-install-beta.sh
+		./multi-install-beta.sh
+      exit
+      ;;
+    N | n)
+      rm 20*
+      clear
+      echo "Du erhältst weiterhin die offizielle Version!"
+      sleep 3
+      ./$file
+      exit
+      ;;
+    *)
+      clear
+      read -n1 "Eingabe nicht erkannt"
+      jumpto settings
+      exit
+      ;;
+    esac
 
+  fi
+}
 
 #   _   _   ____    ____       _      _____   _____ 
 #  | | | | |  _ \  |  _ \     / \    |_   _| | ____|
@@ -157,20 +260,20 @@ function update () {
 		rm 20* || :
 		clear
 		echo "$red Die neuste Version wird heruntergeladen"
-		rm multi-install-beta.sh
-		curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/develop/multi-install-beta.sh -o multi-install-beta.sh.1
+		rm $file
+		curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/develop/multi-install-beta.sh -o $file.1
 		# wget https://raw.githubusercontent.com/Mobulos/multi-install/develop/multi-install-beta.sh
 		sleep 2
 		echo "$reset"
-		rm multi-install-beta.sh
-		mv multi-install-beta.sh.1 multi-install-beta.sh
+		rm $file
+		mv $file.1 $file
 		clear
 		log_success "Das Update wurde Erfolgreich heruntergeladen!"
 		sleep 1
-		chmod +x multi-install-beta.sh
+		chmod +x $file
 	fi
 	touch "$(date +%Y-%m-%d)"
-	./multi-install-beta.sh
+	./$file
 
 }
 
