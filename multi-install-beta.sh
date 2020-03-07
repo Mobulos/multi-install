@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=0.2.1
+ver=0.2.2
 dat=07.03.2020
 file=multi-install-beta.sh
 ############################################
@@ -209,8 +209,8 @@ developer () {
 			clear
 			echo "$red Die neuste Version wird heruntergeladen"
 			rm multi-install*
-			curl --progress-bar https://github.com/Mobulos/multi-install/blob/develop/multi-install-beta.sh -o multi-install-beta.sh.1
-			# wget https://github.com/Mobulos/multi-install/blob/develop/multi-install-beta.sh
+			curl --progress-bar hhttps://raw.githubusercontent.com/Mobulos/multi-install/develop/multi-install-beta.sh -o multi-install-beta.sh.1
+			# wget https://raw.githubusercontent.com/Mobulos/multi-install/develop/multi-install-beta.sh
 			sleep 2
 			echo "$reset"
 			mv multi-install-beta.sh.1 multi-install-beta.sh
