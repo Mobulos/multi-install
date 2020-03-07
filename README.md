@@ -1,4 +1,4 @@
-# multi-install
+# Multi-Install
 Mit diesem Script könnt ihr mehrere "Features" auf einmal installieren
 
 Das Script ist momentan noch nicht für funktional, jedoch soll es eines Tages das installieren von Packages, welche nicht immer leicht sind, automatisieren. Sodass sogar mein Hund das Script (natürlich mit der passenden Tastatur bedienen könnte.
