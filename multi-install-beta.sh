@@ -391,7 +391,6 @@ elif [[ * ]]; then
 				esac
 			;;
 		esac
-		exit
 
 	apt-get update
 	clear
