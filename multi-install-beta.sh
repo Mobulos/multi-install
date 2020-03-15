@@ -354,8 +354,8 @@ elif [[ * ]]; then
 		echo "Welche Linux Distribution ist installiert?"
 		echo "[1] Debian"
 		echo "[2] Linux"
-		read -n1 -p "Deine Version: " ver
-		case $ver in
+		read -n1 -p "Deine Version: " verl
+		case $verl in
 			1)
 				clear
 				read -n1 -p "Bist du dir sicher, dass du Debian hast? (Y|N)" verjn
