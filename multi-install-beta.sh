@@ -42,46 +42,8 @@ chmod +x .log4bash.sh
 source .log4bash.sh
 clear
 
-# ERKENNE LINUX VERSION
-echo "Folgende Linux Version wurde erkannt:"
-cat /etc/issue
-echo
-select ver in Debian Linux
-do
-	echo "$ver"
-	continue
-done
-echo
-read -n1 "Bitte wähle deine Linux Version" vernr
-case $vernr in
-	1)
-		read "Bist du dir sicher, dass du $ver hast? (Y|N)" verjn
-		case $verjn in
-			Y | y | j | J)
-			echo "1"
-			;;
-			N | n)
-			echo "Dann nicht!"
-			exit
-			;;
-		esac
-	;;
-	2)
-		read "Bist du dir sicher, dass du $ver hast? (Y|N)" verjn
-		case $verjn in
-			Y | y | j | J)
-			echo "1"
-			;;
-			N | n)
-			echo "Dann nicht!"
-			exit
-			;;
-		esac
-	;;
-esac
-exit
 
-
+$$1
 
 
 #   _____  __  __  ___   _____   _____ 
@@ -388,6 +350,52 @@ if [ -f $(date +%Y-%m*) ]; then
 	update
 elif [[ * ]]; then
 	# WENN ERSTER START:
+	# ERKENNE LINUX VERSION
+		echo "Folgende Linux Version wurde erkannt:"
+		cat /etc/issue
+		echo
+		echo "Welche Linux Distribution ist installiert?"
+		echo "[1] Debian"
+		echo "[2] Linux"
+		read -n1 -p "Deine Version: " ver
+		case $ver in
+			1)
+				clear
+				read -n1 -p "Bist du dir sicher, dass du Debian hast? (Y|N)" verjn
+				case $verjn in
+					Y | y | j | J)
+					clear
+					echo "1"
+					sleep 5
+					;;
+					N | n)
+					clear
+					echo "Dann nicht!"
+					sleep 5
+					exit
+					;;
+				esac
+			;;
+			2)
+				clear
+				read -n1 -p "Bist du dir sicher, dass du Linux hast? (Y|N)" verjn
+				case $verjn in
+					Y | y | j | J)
+					sleep 5
+					clear
+					echo "1"
+					;;
+					N | n)
+					sleep 5
+					clear
+					echo "Dann nicht!"
+					exit
+					;;
+				esac
+			;;
+		esac
+		exit
+
 	apt-get update
 	clear
 	apt-get upgrade -y
