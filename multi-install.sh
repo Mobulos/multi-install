@@ -60,6 +60,7 @@ do
 	;;
 done
 cat /etc/issue
+exit
 
 
 
