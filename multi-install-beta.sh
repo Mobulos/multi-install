@@ -5,8 +5,8 @@
 ############################################
 ################# CHANGE ###################
 ver=0.3.1
-dat=07.03.2020
-file=multi-install.sh
+dat=15.03.2020
+file=multi-install-beta.sh
 ############################################
 ############################################
 
@@ -41,9 +41,6 @@ curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/mast
 chmod +x .log4bash.sh
 source .log4bash.sh
 clear
-
-
-$$1
 
 
 #   _____  __  __  ___   _____   _____ 
@@ -364,15 +361,15 @@ elif [[ * ]]; then
 				read -n1 -p "Bist du dir sicher, dass du Debian hast? (Y|N)" verjn
 				case $verjn in
 					Y | y | j | J)
-					clear
-					echo "1"
-					sleep 5
+						echo "Debian" >> .version
+						echo "Deine Version wurde nun auch Debian gestellt!"
+						sleep 2
 					;;
 					N | n)
-					clear
-					echo "Dann nicht!"
-					sleep 5
-					exit
+						clear
+						echo "Okay, wir müssen das Script jedoch schließen!"
+						sleep 3
+						exit
 					;;
 				esac
 			;;
@@ -381,15 +378,15 @@ elif [[ * ]]; then
 				read -n1 -p "Bist du dir sicher, dass du Linux hast? (Y|N)" verjn
 				case $verjn in
 					Y | y | j | J)
-					sleep 5
-					clear
-					echo "1"
+						clear
+						echo "Debian" >> .version
+						echo "Deine Version wurde nun auch Linux gestellt!"
+						sleep 2
 					;;
 					N | n)
-					sleep 5
-					clear
-					echo "Dann nicht!"
-					exit
+						clear
+						echo "Okay, wir müssen das Script jedoch schließen!"
+						exit
 					;;
 				esac
 			;;
