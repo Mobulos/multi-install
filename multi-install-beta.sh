@@ -46,20 +46,38 @@ clear
 echo "Folgende Linux Version wurde erkannt:"
 cat /etc/issue
 echo
-echo "Bitte wähle deine Linux Version!:"
 select ver in Debian Linux
 do
-	y | Y | j | J)
-	read "Bist du dir sicher, dass du $ver hast? (Y|N)"
-	echo "1"
-	exit
-	;;
-	N | n)
-	echo "2"
-	exit
-	;;
+	echo "$ver"
 done
-cat /etc/issue
+echo
+read "Bitte wähle deine Linux Version" ver
+case $vernr in
+	1)
+		read "Bist du dir sicher, dass du $ver hast? (Y|N)" verjn
+		case $verjn in
+			Y | y | j | J)
+			echo "1"
+			;;
+			N | n)
+			echo "Dann nicht!"
+			exit
+			;;
+		esac
+	;;
+	2)
+		read "Bist du dir sicher, dass du $ver hast? (Y|N)" verjn
+		case $verjn in
+			Y | y | j | J)
+			echo "1"
+			;;
+			N | n)
+			echo "Dann nicht!"
+			exit
+			;;
+		esac
+	;;
+esac
 exit
 
 
