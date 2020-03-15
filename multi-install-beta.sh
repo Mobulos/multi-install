@@ -49,8 +49,8 @@ echo
 echo "Bitte wähle deine Linux Version!:"
 select ver in Debian Linux
 do
-	read "Bist du dir sicher, dass du $ver hast? (Y|N)"
 	y | Y | j | J)
+	read "Bist du dir sicher, dass du $ver hast? (Y|N)"
 	echo "1"
 	exit
 	;;
