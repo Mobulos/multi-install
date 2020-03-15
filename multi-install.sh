@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=0.3.0
+ver=0.3.1
 dat=07.03.2020
 file=multi-install.sh
 ############################################
@@ -41,6 +41,27 @@ curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/mast
 chmod +x .log4bash.sh
 source .log4bash.sh
 clear
+
+# ERKENNE LINUX VERSION
+echo "Folgende Linux Version wurde erkannt:"
+cat /etc/issue
+echo
+echo "Bitte wähle deine Linux Version!:"
+select ver in Debian Linux
+do
+	read "Bist du dir sicher, dass du $ver hast? (Y|N)"
+	y | Y | j | J)
+	echo "1"
+	exit
+	;;
+	N | n)
+	echo "2"
+	exit
+	;;
+done
+cat /etc/issue
+
+
 
 
 #   _____  __  __  ___   _____   _____ 
@@ -173,13 +194,15 @@ function settings () {
 		exitf
 		;;
 	2)
-		resume
+		menue
+		continue
 		;;
 	*)
 		clear
 		log_error "Du musst dich vertippt haben..."
 		sleep 2
 		settings
+		continue
 		;;
 	esac
 }
