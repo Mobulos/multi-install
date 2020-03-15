@@ -274,8 +274,8 @@ developer () {
 		clear
 		echo "$red Die neuste Version wird heruntergeladen"
 		rm multi-install*
-		curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/develop/multi-install-beta.sh -o multi-install-beta.sh.1
-		# wget https://raw.githubusercontent.com/Mobulos/multi-install/develop/multi-install-beta.sh
+		curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh -o multi-install-beta.sh.1
+		# wget https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
 		sleep 2
 		echo "$reset"
 		mv multi-install-beta.sh.1 multi-install-beta.sh
