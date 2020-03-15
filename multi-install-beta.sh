@@ -49,9 +49,10 @@ echo
 select ver in Debian Linux
 do
 	echo "$ver"
+	continue
 done
 echo
-read "Bitte wähle deine Linux Version" ver
+read -n1 "Bitte wähle deine Linux Version" vernr
 case $vernr in
 	1)
 		read "Bist du dir sicher, dass du $ver hast? (Y|N)" verjn
