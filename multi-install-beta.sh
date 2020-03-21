@@ -4,8 +4,8 @@
 
 ############################################
 ################# CHANGE ###################
-ver=0.3.2
-dat=15.03.2020
+ver=0.3.3
+dat=21.03.2020
 file=multi-install-beta.sh
 ############################################
 ############################################
@@ -72,7 +72,7 @@ function pre () {
 	sleep .1
 	echo
 	echo "$reset""Version $ver"
-	# echo "$red""[DEVELOPER] "$reset"Version $ver"
+	echo "$red""[DEVELOPER] "$reset"Version $ver"
 	echo "Update $dat"
 	echo "$reset"
 	echo
@@ -158,7 +158,11 @@ function settings () {
 	sleep .1
 	tmp=($(tput setaf 4))
 	echo -n "$tmp"
-	echo "[1] Developer Updates"
+	echo "[1] Linux Version"
+	sleep .1
+	tmp=($(tput setaf 4))
+	echo -n "$tmp"
+	echo "[2] Developer Updates"
 	sleep .1
 	tmp=($(tput setaf 6))
 	echo -n "$tmp"
@@ -169,20 +173,27 @@ function settings () {
 	echo -n "$reset"
 	case $befehl in
 	1)
+		clear
+		
+		echo ""
+		read -n1 -p "Bitte wähle deine Linux Version: " linver
+
+	;;
+	2)
 		developer
 		exitf
-		;;
-	2)
+	;;
+	3)
 		menue
 		continue
-		;;
+	;;
 	*)
 		clear
 		log_error "Du musst dich vertippt haben..."
 		sleep 2
 		settings
 		continue
-		;;
+	;;
 	esac
 }
 
@@ -201,41 +212,41 @@ developer () {
 		read -n1 -p "Möchtest du zuräck zur release Version (slow) [Y/N] " versionl
 		case $versionl in
 			Y | y | J | j)
-			# DEVOLOPER STAY
-			rm .dev
-			rm 20*
-			clear
-			echo "Du erhältst nun keine Developer-Versionen mehr!"
-			sleep 3
-			touch "$(date +%Y-%m-%d)"
-			rm 20*
-			clear
-			echo "$red Die neuste Version wird heruntergeladen"
-			rm multi-install*
-			curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh.1
-			# wget https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
-			sleep 2
-			echo "$reset"
-			mv multi-install.sh.1 multi-install.sh
-			clear
-			log_success "Das Update wurde Erfolgreich heruntergeladen!"
-			sleep 1
-			chmod +x multi-install.sh
-			./multi-install.sh
-			exitf
+				# DEVOLOPER STAY
+				rm .dev
+				rm 20*
+				clear
+				echo "Du erhältst nun keine Developer-Versionen mehr!"
+				sleep 3
+				touch "$(date +%Y-%m-%d)"
+				rm 20*
+				clear
+				echo "$red Die neuste Version wird heruntergeladen"
+				rm multi-install*
+				curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh.1
+				# wget https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
+				sleep 2
+				echo "$reset"
+				mv multi-install.sh.1 multi-install.sh
+				clear
+				log_success "Das Update wurde Erfolgreich heruntergeladen!"
+				sleep 1
+				chmod +x multi-install.sh
+				./multi-install.sh
+				exitf
 			;;
 			N | n)
-			clear
-			echo "Du erhälstst weiterhin Developer Updates."
-			sleep 3
-			./$file
-			exitf
-			;;
-			*)
-			clear
-			read -n1 "Eingabe nicht erkannt"
-			jumpto settings
-			exitf
+				clear
+				echo "Du erhälstst weiterhin Developer Updates."
+				sleep 3
+				./$file
+				exitf
+				;;
+				*)
+				clear
+				read -n1 "Eingabe nicht erkannt"
+				jumpto settings
+				exitf
 			;;
 		esac
   elif [[ * ]]; then
@@ -263,21 +274,21 @@ developer () {
 		sleep 1
 		chmod +x multi-install-beta.sh
 		./multi-install-beta.sh
-      exitf
+		exitf
       ;;
     N | n)
-      rm 20*
-      clear
-      echo "Du erhältst weiterhin die offizielle Version!"
-      sleep 3
-      ./$file
-      exitf
+		rm 20*
+		clear
+		echo "Du erhältst weiterhin die offizielle Version!"
+		sleep 3
+		./$file
+		exitf
       ;;
     *)
-      clear
-      read -n1 "Eingabe nicht erkannt"
-      developer
-      exitf
+		clear
+		read -n1 "Eingabe nicht erkannt"
+		developer
+		exitf
       ;;
     esac
 
