@@ -4,10 +4,10 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.0.0
+ver=1.0.2
 dat=20.04.2020
-file=multi-install.sh
-link=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
+file=multi-install-beta.sh
+link=https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
 
 ### INSTALL ###
 debianinstall="curl wget sudo screen dialog"
@@ -77,13 +77,12 @@ function pre () {
 	echo "##########################################"
 	sleep .1
 	echo
-	echo "$reset""Version $ver"
-	#echo "$red""[DEVELOPER] "$reset"Version $ver"
+	#echo "$reset""Version $ver"
+	echo "$red""[DEVELOPER] "$reset"Version $ver"
 	echo "Update $dat"
-	echo "$reset"
+	echo -n "$reset"
 	echo
-	#log_warning "Dies ist die PRE-RELEASE Version, das Script verfügt noch nicht über alle Funktionen!"
-	echo
+	log_warning "Dies ist die PRE-RELEASE Version, das Script verfügt noch nicht über alle Funktionen!"
 	echo
 
 }
@@ -233,6 +232,7 @@ function settings () {
 
 
 installation () {
+	rm install || :
 	apt-get update
 	apt-get upgrade -y
 	clear
