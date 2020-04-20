@@ -4,10 +4,15 @@
 
 ############################################
 ################# CHANGE ###################
-ver=0.3.6
+ver=0.3.8
 dat=20.04.2020
 file=multi-install-beta.sh
 link=https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
+
+### INSTALL ###
+debianinstall="curl wget sudo screen dialog"
+linuxinstall="curl wget sudo screen dialog"
+###         ###
 ############################################
 ############################################
 
@@ -96,31 +101,27 @@ function menue () {
 	pre
 	sleep .5
 	echo "Auswahlmöglichkeiten:"
+
 	sleep .1
-	# tmp=($(tput setaf 4))
-	# echo -n "$tmp"
-	echo "$tput4 [1] Einstellungen"
-	# tmp=($(tput setaf 5))
-	# echo -n "$tmp"
+	echo "$tput5 [1] Update"
+
 	sleep .1
-	echo "$tput5 [2] Update"
-	# tmp=($(tput setaf 6))
-	# echo -n "$tmp"
+	echo "$tput4 [2] Einstellungen"
+
 	sleep .1
 	echo "$tput6 [3] Exit"
-	# tmp=($(tput setaf 3))
-	# echo -n "$tmp"
+
 	echo -n "$tput3"
-	read -n1 -p "Was willst du tun?: " befehl
+	read -n1 -p "Was willst du tun?: " menbef
 	clear
 	echo -n "$reset"
-	case $befehl in
+	case $menbef in
 	1)
-		settings
-		;;
-	2)
 		rm 20*
 		update
+		;;
+	2)
+		settings
 		;;
 	3)
 		continue
@@ -173,10 +174,10 @@ function settings () {
 	echo -n "$tmp"
 	echo "[4] Zurück"
 	echo -n "$reset"
-	read -n1 -p "Was willst du tun?: " befehl
+	read -n1 -p "Was willst du tun?: " setbef
 	clear
 	echo -n "$reset"
-	case $befehl in
+	case $setbef in
 	1)
 		clear
 		
@@ -215,6 +216,48 @@ function settings () {
 	esac
 }
 
+
+#   ___   _   _   ____    _____      _      _       _          _      _____   ___    ___    _   _ 
+#  |_ _| | \ | | / ___|  |_   _|    / \    | |     | |        / \    |_   _| |_ _|  / _ \  | \ | |
+#   | |  |  \| | \___ \    | |     / _ \   | |     | |       / _ \     | |    | |  | | | | |  \| |
+#   | |  | |\  |  ___) |   | |    / ___ \  | |___  | |___   / ___ \    | |    | |  | |_| | | |\  |
+#  |___| |_| \_| |____/    |_|   /_/   \_\ |_____| |_____| /_/   \_\   |_|   |___|  \___/  |_| \_|
+                                                                                                
+                                                                                                                              
+
+
+installation () {
+	apt-get update
+	apt-get upgrade -y
+	clear
+	dialog --title "Progeamme" \
+		--menu  "Wähle ein Programm zum installieren:" 15 55 5 \
+			'nano' 'Textbearbeitung' \
+			'java' 'Installiert Java' 2> install
+	installfile=`cat install`
+	clear
+	
+if [[ $installfile="nano" ]]
+then
+	clear
+	apt-get install nano
+	clear
+	log_success "Nano Wurde installiert!"
+elif [[ $installfile="java" ]]
+	clear
+	log_warning "Die installation von java steht noch nicht zur verfügung!"
+	read -n1
+	exitf
+elfi [[ * ]]
+then
+	clear
+	log_warning "Ein Fehler ist aufgetreten!"
+	log_error "Die installation konnte nicht erkannt werden!"
+	echo
+	log_warning "Das Script wird beendet!"
+	exitf
+fi
+}
 
 #   ____    _____  __     __  _____   _        ___    ____    _____   ____  
 #  |  _ \  | ____| \ \   / / | ____| | |      / _ \  |  _ \  | ____| |  _ \ 
@@ -344,8 +387,7 @@ function update () {
 		chmod +x $file
 	fi
 	touch "$(date +%Y-%m-%d)"
-	./$file
-
+	exitf
 }
 
 
@@ -394,6 +436,18 @@ elif [[ * ]]; then
 						clear
 						echo "Deine Version wurde nun auf Debian gestellt!"
 						sleep 2
+							apt-get update
+							clear
+							apt-get upgrade -y
+
+							# INSTALLATION BENÖTIGTER PAKETE
+							for i in $debianinstall
+							do
+								apt-get install $i -y
+								clear
+							done
+							update
+
 					;;
 					N | n)
 						clear
@@ -410,8 +464,27 @@ elif [[ * ]]; then
 					Y | y | j | J)
 						echo "Linux" >> .version
 						clear
-						echo "Deine Version wurde nun auch Linux gestellt!"
-						sleep 2
+						log_success "Deine Version wurde nun auch Linux gestellt!"
+						echo
+						log_warning "Linux wurde bissher noch nicht getestet!"
+						echo
+						echo
+						echo "Wir bitten dich, fehler über Github zu melden!"
+						sleep 10
+						clear
+							apt-get update
+							clear
+							apt-get upgrade -y
+
+							# INSTALLATION BENÖTIGTER PAKETE
+							for i in $linuxinstall
+							do
+								apt-get install $i -y
+								clear
+							done
+							update
+
+
 					;;
 					N | n)
 						clear
@@ -428,17 +501,6 @@ elif [[ * ]]; then
 			;;
 		esac
 
-	apt-get update
-	clear
-	apt-get upgrade -y
-
-	# INSTALLATION BENÖTIGTER PAKETE
-	for i in curl wget sudo screen
-	do
-		apt-get install $i -y
-		clear
-	done
-	update
 fi
 
 menue
