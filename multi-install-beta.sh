@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=0.3.8
+ver=0.3.9
 dat=20.04.2020
 file=multi-install-beta.sh
 link=https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
