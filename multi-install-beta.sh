@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=0.3.4
+ver=0.3.5
 dat=20.04.2020
 file=multi-install-beta.sh
 ############################################
@@ -190,7 +190,14 @@ function settings () {
 	3)
 		clear
 		log_warning "Es werden alle Daten zurückgesetzt"
+		log_warning "Der vorgang kann innerhalb 10 SEKUNDEN ABGEBROCHEN werden!"
+		sleep 10
+		clear
 		rm 20*
+		rm .log4bash.sh
+		rm .version
+		clear
+		log_success "Das Script wurde erfolgreich zurückgesetzt!"
 		exitf
 	;;
 	4)
