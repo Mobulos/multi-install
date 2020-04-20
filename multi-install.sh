@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.0.2
+ver=1.0.3
 dat=20.04.2020
 file=multi-install.sh
 link=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
@@ -77,12 +77,12 @@ function pre () {
 	echo "##########################################"
 	sleep .1
 	echo
-	#echo "$reset""Version $ver"
-	echo "$red""[DEVELOPER] "$reset"Version $ver"
+	echo "$reset""Version $ver"
+	#echo "$red""[DEVELOPER] "$reset"Version $ver"
 	echo "Update $dat"
 	echo -n "$reset"
 	echo
-	log_warning "Dies ist die PRE-RELEASE Version, das Script verfügt noch nicht über alle Funktionen!"
+	#log_warning "Dies ist die PRE-RELEASE Version, das Script verfügt noch nicht über alle Funktionen!"
 	echo
 
 }
@@ -423,6 +423,10 @@ if [ -f $(date +%Y-%m*) ]; then
 	# WENN NICHT ERSTER START:
 	update
 elif [[ * ]]; then
+	rm 20* || :
+	rm .log4bash.sh || :
+	rm .version || :
+	clear
 	# WENN ERSTER START:
 	# ERKENNE LINUX VERSION
 		echo "Folgende Linux Version wurde erkannt:"
