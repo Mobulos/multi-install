@@ -4,10 +4,10 @@
 
 ############################################
 ################# CHANGE ###################
-ver=0.3.9
+ver=1.0.0
 dat=20.04.2020
-file=multi-install-beta.sh
-link=https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
+file=multi-install.sh
+link=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
 
 ### INSTALL ###
 debianinstall="curl wget sudo screen dialog"
