@@ -4,9 +4,10 @@
 
 ############################################
 ################# CHANGE ###################
-ver=0.3.5
+ver=0.3.6
 dat=20.04.2020
 file=multi-install-beta.sh
+link=https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
 ############################################
 ############################################
 
@@ -71,7 +72,7 @@ function pre () {
 	echo "##########################################"
 	sleep .1
 	echo
-	echo "$reset""Version $ver"
+	#echo "$reset""Version $ver"
 	echo "$red""[DEVELOPER] "$reset"Version $ver"
 	echo "Update $dat"
 	echo "$reset"
@@ -332,7 +333,7 @@ function update () {
 		clear
 		echo "$red Die neuste Version wird heruntergeladen"
 		rm $file
-		curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o $file.1
+		curl --progress-bar $link -o $file.1
 		sleep 2
 		echo "$reset"
 		rm $file
