@@ -103,13 +103,16 @@ function menue () {
 	echo "Auswahlmöglichkeiten:"
 
 	sleep .1
-	echo "$tput5 [1] Update"
+	echo "$tput5 [1] Installationen"
 
 	sleep .1
-	echo "$tput4 [2] Einstellungen"
+	echo "$tput4 [2] Update"
 
 	sleep .1
-	echo "$tput6 [3] Exit"
+	echo "$tput4 [3] Einstellungen"
+
+	sleep .1
+	echo "$tput6 [4] Exit"
 
 	echo -n "$tput3"
 	read -n1 -p "Was willst du tun?: " menbef
@@ -117,13 +120,16 @@ function menue () {
 	echo -n "$reset"
 	case $menbef in
 	1)
+		installation
+		;;
+	2)
 		rm 20*
 		update
 		;;
-	2)
+	3)
 		settings
 		;;
-	3)
+	4)
 		continue
 		;;
 	*)
