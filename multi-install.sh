@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.0.1
+ver=1.0.2
 dat=20.04.2020
 file=multi-install.sh
 link=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
@@ -80,10 +80,9 @@ function pre () {
 	echo "$reset""Version $ver"
 	#echo "$red""[DEVELOPER] "$reset"Version $ver"
 	echo "Update $dat"
-	echo "$reset"
+	echo -n "$reset"
 	echo
 	#log_warning "Dies ist die PRE-RELEASE Version, das Script verfügt noch nicht über alle Funktionen!"
-	echo
 	echo
 
 }
