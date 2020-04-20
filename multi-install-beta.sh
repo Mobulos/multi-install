@@ -4,8 +4,8 @@
 
 ############################################
 ################# CHANGE ###################
-ver=0.3.3
-dat=21.03.2020
+ver=0.3.4
+dat=20.04.2020
 file=multi-install-beta.sh
 ############################################
 ############################################
@@ -164,9 +164,13 @@ function settings () {
 	echo -n "$tmp"
 	echo "[2] Developer Updates"
 	sleep .1
+	tmp=($(tput setaf 5))
+	echo -n "$tmp"
+	echo "[3] Script zurücksetzen"
+	sleep .1
 	tmp=($(tput setaf 6))
 	echo -n "$tmp"
-	echo "[2] Zurück"
+	echo "[4] Zurück"
 	echo -n "$reset"
 	read -n1 -p "Was willst du tun?: " befehl
 	clear
@@ -184,6 +188,12 @@ function settings () {
 		exitf
 	;;
 	3)
+		clear
+		log_warning "Es werden alle Daten zurückgesetzt"
+		rm 20*
+		exitf
+	;;
+	4)
 		menue
 		continue
 	;;
@@ -373,7 +383,8 @@ elif [[ * ]]; then
 				case $verjn in
 					Y | y | j | J)
 						echo "Debian" >> .version
-						echo "Deine Version wurde nun auch Debian gestellt!"
+						clear
+						echo "Deine Version wurde nun auf Debian gestellt!"
 						sleep 2
 					;;
 					N | n)
@@ -389,8 +400,8 @@ elif [[ * ]]; then
 				read -n1 -p "Bist du dir sicher, dass du Linux hast? (Y|N)" verjn
 				case $verjn in
 					Y | y | j | J)
+						echo "Linux" >> .version
 						clear
-						echo "Debian" >> .version
 						echo "Deine Version wurde nun auch Linux gestellt!"
 						sleep 2
 					;;
@@ -400,6 +411,12 @@ elif [[ * ]]; then
 						exit
 					;;
 				esac
+			;;
+			*)
+				clear
+				echo "Die Eingabe wurde nicht erkannt."
+				log_warning "Das Script wird beendet!"
+				exitf
 			;;
 		esac
 
