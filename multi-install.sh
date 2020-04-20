@@ -77,12 +77,12 @@ function pre () {
 	echo "##########################################"
 	sleep .1
 	echo
-	#echo "$reset""Version $ver"
-	echo "$red""[DEVELOPER] "$reset"Version $ver"
+	echo "$reset""Version $ver"
+	#echo "$red""[DEVELOPER] "$reset"Version $ver"
 	echo "Update $dat"
 	echo "$reset"
 	echo
-	log_warning "Dies ist die PRE-RELEASE Version, das Script verfügt noch nicht über alle Funktionen!"
+	#log_warning "Dies ist die PRE-RELEASE Version, das Script verfügt noch nicht über alle Funktionen!"
 	echo
 	echo
 
