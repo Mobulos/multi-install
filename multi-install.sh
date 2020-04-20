@@ -4,9 +4,15 @@
 
 ############################################
 ################# CHANGE ###################
-ver=0.3.1
-dat=07.03.2020
+ver=1.0.0
+dat=20.04.2020
 file=multi-install.sh
+link=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
+
+### INSTALL ###
+debianinstall="curl wget sudo screen dialog"
+linuxinstall="curl wget sudo screen dialog"
+###         ###
 ############################################
 ############################################
 
@@ -42,27 +48,6 @@ chmod +x .log4bash.sh
 source .log4bash.sh
 clear
 
-# ERKENNE LINUX VERSION
-echo "Folgende Linux Version wurde erkannt:"
-cat /etc/issue
-echo
-echo "Bitte wähle deine Linux Version!:"
-select ver in Debian Linux
-do
-	read "Bist du dir sicher, dass du $ver hast? (Y|N)"
-	y | Y | j | J)
-	echo "1"
-	exit
-	;;
-	N | n)
-	echo "2"
-	exit
-	;;
-done
-cat /etc/issue
-
-
-
 
 #   _____  __  __  ___   _____   _____ 
 #  | ____| \ \/ / |_ _| |_   _| |  ___|
@@ -93,11 +78,11 @@ function pre () {
 	sleep .1
 	echo
 	echo "$reset""Version $ver"
-	# echo "$red""[DEVELOPER] "$reset"Version $ver"
+	#echo "$red""[DEVELOPER] "$reset"Version $ver"
 	echo "Update $dat"
 	echo "$reset"
 	echo
-	log_warning "Dies ist die PRE-RELEASE Version, das Script verfügt noch nicht über alle Funktionen!"
+	#log_warning "Dies ist die PRE-RELEASE Version, das Script verfügt noch nicht über alle Funktionen!"
 	echo
 	echo
 
@@ -116,33 +101,35 @@ function menue () {
 	pre
 	sleep .5
 	echo "Auswahlmöglichkeiten:"
+
 	sleep .1
-	# tmp=($(tput setaf 4))
-	# echo -n "$tmp"
-	echo "$tput4 [1] Einstellungen"
-	# tmp=($(tput setaf 5))
-	# echo -n "$tmp"
+	echo "$tput5 [1] Installationen"
+
 	sleep .1
-	echo "$tput5 [2] Update"
-	# tmp=($(tput setaf 6))
-	# echo -n "$tmp"
+	echo "$tput4 [2] Update"
+
 	sleep .1
-	echo "$tput6 [3] Exit"
-	# tmp=($(tput setaf 3))
-	# echo -n "$tmp"
+	echo "$tput4 [3] Einstellungen"
+
+	sleep .1
+	echo "$tput6 [4] Exit"
+
 	echo -n "$tput3"
-	read -n1 -p "Was willst du tun?: " befehl
+	read -n1 -p "Was willst du tun?: " menbef
 	clear
 	echo -n "$reset"
-	case $befehl in
+	case $menbef in
 	1)
-		settings
+		installation
 		;;
 	2)
 		rm 20*
 		update
 		;;
 	3)
+		settings
+		;;
+	4)
 		continue
 		;;
 	*)
@@ -179,34 +166,104 @@ function settings () {
 	sleep .1
 	tmp=($(tput setaf 4))
 	echo -n "$tmp"
-	echo "[1] Developer Updates"
+	echo "[1] Linux Version"
+	sleep .1
+	tmp=($(tput setaf 4))
+	echo -n "$tmp"
+	echo "[2] Developer Updates"
+	sleep .1
+	tmp=($(tput setaf 5))
+	echo -n "$tmp"
+	echo "[3] Script zurücksetzen"
 	sleep .1
 	tmp=($(tput setaf 6))
 	echo -n "$tmp"
-	echo "[2] Zurück"
+	echo "[4] Zurück"
 	echo -n "$reset"
-	read -n1 -p "Was willst du tun?: " befehl
+	read -n1 -p "Was willst du tun?: " setbef
 	clear
 	echo -n "$reset"
-	case $befehl in
+	case $setbef in
 	1)
+		clear
+		
+		echo ""
+		read -n1 -p "Bitte wähle deine Linux Version: " linver
+
+	;;
+	2)
 		developer
 		exitf
-		;;
-	2)
+	;;
+	3)
+		clear
+		log_warning "Es werden alle Daten zurückgesetzt"
+		log_warning "Der vorgang kann innerhalb 10 SEKUNDEN ABGEBROCHEN werden!"
+		sleep 10
+		clear
+		rm 20*
+		rm .log4bash.sh
+		rm .version
+		clear
+		log_success "Das Script wurde erfolgreich zurückgesetzt!"
+		exitf
+	;;
+	4)
 		menue
 		continue
-		;;
+	;;
 	*)
 		clear
 		log_error "Du musst dich vertippt haben..."
 		sleep 2
 		settings
 		continue
-		;;
+	;;
 	esac
 }
 
+
+#   ___   _   _   ____    _____      _      _       _          _      _____   ___    ___    _   _ 
+#  |_ _| | \ | | / ___|  |_   _|    / \    | |     | |        / \    |_   _| |_ _|  / _ \  | \ | |
+#   | |  |  \| | \___ \    | |     / _ \   | |     | |       / _ \     | |    | |  | | | | |  \| |
+#   | |  | |\  |  ___) |   | |    / ___ \  | |___  | |___   / ___ \    | |    | |  | |_| | | |\  |
+#  |___| |_| \_| |____/    |_|   /_/   \_\ |_____| |_____| /_/   \_\   |_|   |___|  \___/  |_| \_|
+                                                                                                
+                                                                                                                              
+
+
+installation () {
+	apt-get update
+	apt-get upgrade -y
+	clear
+	dialog --title "Progeamme" \
+		--menu  "Wähle ein Programm zum installieren:" 15 55 5 \
+			'nano' 'Textbearbeitung' \
+			'java' 'Installiert Java' 2> install
+	installfile=`cat install`
+	clear
+	
+if [[ $installfile="nano" ]]
+then
+	clear
+	apt-get install nano
+	clear
+	log_success "Nano Wurde installiert!"
+elif [[ $installfile="java" ]]
+	clear
+	log_warning "Die installation von java steht noch nicht zur verfügung!"
+	read -n1
+	exitf
+elfi [[ * ]]
+then
+	clear
+	log_warning "Ein Fehler ist aufgetreten!"
+	log_error "Die installation konnte nicht erkannt werden!"
+	echo
+	log_warning "Das Script wird beendet!"
+	exitf
+fi
+}
 
 #   ____    _____  __     __  _____   _        ___    ____    _____   ____  
 #  |  _ \  | ____| \ \   / / | ____| | |      / _ \  |  _ \  | ____| |  _ \ 
@@ -222,41 +279,41 @@ developer () {
 		read -n1 -p "Möchtest du zuräck zur release Version (slow) [Y/N] " versionl
 		case $versionl in
 			Y | y | J | j)
-			# DEVOLOPER STAY
-			rm .dev
-			rm 20*
-			clear
-			echo "Du erhältst nun keine Developer-Versionen mehr!"
-			sleep 3
-			touch "$(date +%Y-%m-%d)"
-			rm 20*
-			clear
-			echo "$red Die neuste Version wird heruntergeladen"
-			rm multi-install*
-			curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh.1
-			# wget https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
-			sleep 2
-			echo "$reset"
-			mv multi-install.sh.1 multi-install.sh
-			clear
-			log_success "Das Update wurde Erfolgreich heruntergeladen!"
-			sleep 1
-			chmod +x multi-install.sh
-			./multi-install.sh
-			exitf
+				# DEVOLOPER STAY
+				rm .dev
+				rm 20*
+				clear
+				echo "Du erhältst nun keine Developer-Versionen mehr!"
+				sleep 3
+				touch "$(date +%Y-%m-%d)"
+				rm 20*
+				clear
+				echo "$red Die neuste Version wird heruntergeladen"
+				rm multi-install*
+				curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh.1
+				# wget https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
+				sleep 2
+				echo "$reset"
+				mv multi-install.sh.1 multi-install.sh
+				clear
+				log_success "Das Update wurde Erfolgreich heruntergeladen!"
+				sleep 1
+				chmod +x multi-install.sh
+				./multi-install.sh
+				exitf
 			;;
 			N | n)
-			clear
-			echo "Du erhälstst weiterhin Developer Updates."
-			sleep 3
-			./$file
-			exitf
-			;;
-			*)
-			clear
-			read -n1 "Eingabe nicht erkannt"
-			jumpto settings
-			exitf
+				clear
+				echo "Du erhälstst weiterhin Developer Updates."
+				sleep 3
+				./$file
+				exitf
+				;;
+				*)
+				clear
+				read -n1 "Eingabe nicht erkannt"
+				jumpto settings
+				exitf
 			;;
 		esac
   elif [[ * ]]; then
@@ -284,21 +341,21 @@ developer () {
 		sleep 1
 		chmod +x multi-install-beta.sh
 		./multi-install-beta.sh
-      exitf
+		exitf
       ;;
     N | n)
-      rm 20*
-      clear
-      echo "Du erhältst weiterhin die offizielle Version!"
-      sleep 3
-      ./$file
-      exitf
+		rm 20*
+		clear
+		echo "Du erhältst weiterhin die offizielle Version!"
+		sleep 3
+		./$file
+		exitf
       ;;
     *)
-      clear
-      read -n1 "Eingabe nicht erkannt"
-      developer
-      exitf
+		clear
+		read -n1 "Eingabe nicht erkannt"
+		developer
+		exitf
       ;;
     esac
 
@@ -325,7 +382,7 @@ function update () {
 		clear
 		echo "$red Die neuste Version wird heruntergeladen"
 		rm $file
-		curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o $file.1
+		curl --progress-bar $link -o $file.1
 		sleep 2
 		echo "$reset"
 		rm $file
@@ -336,8 +393,7 @@ function update () {
 		chmod +x $file
 	fi
 	touch "$(date +%Y-%m-%d)"
-	./$file
-
+	exitf
 }
 
 
@@ -368,17 +424,89 @@ if [ -f $(date +%Y-%m*) ]; then
 	update
 elif [[ * ]]; then
 	# WENN ERSTER START:
-	apt-get update
-	clear
-	apt-get upgrade -y
+	# ERKENNE LINUX VERSION
+		echo "Folgende Linux Version wurde erkannt:"
+		cat /etc/issue
+		echo
+		echo "Welche Linux Distribution ist installiert?"
+		echo "[1] Debian"
+		echo "[2] Linux"
+		read -n1 -p "Deine Version: " verl
+		case $verl in
+			1)
+				clear
+				read -n1 -p "Bist du dir sicher, dass du Debian hast? (Y|N)" verjn
+				case $verjn in
+					Y | y | j | J)
+						echo "Debian" >> .version
+						clear
+						echo "Deine Version wurde nun auf Debian gestellt!"
+						sleep 2
+							apt-get update
+							clear
+							apt-get upgrade -y
 
-	# INSTALLATION BENÖTIGTER PAKETE
-	for i in curl wget sudo screen
-	do
-		apt-get install $i -y
-		clear
-	done
-	update
+							# INSTALLATION BENÖTIGTER PAKETE
+							for i in $debianinstall
+							do
+								apt-get install $i -y
+								clear
+							done
+							update
+
+					;;
+					N | n)
+						clear
+						echo "Okay, wir müssen das Script jedoch schließen!"
+						sleep 3
+						exit
+					;;
+				esac
+			;;
+			2)
+				clear
+				read -n1 -p "Bist du dir sicher, dass du Linux hast? (Y|N)" verjn
+				case $verjn in
+					Y | y | j | J)
+						echo "Linux" >> .version
+						clear
+						log_success "Deine Version wurde nun auch Linux gestellt!"
+						echo
+						log_warning "Linux wurde bissher noch nicht getestet!"
+						echo
+						echo
+						echo "Wir bitten dich, fehler über Github zu melden!"
+						sleep 10
+						clear
+							apt-get update
+							clear
+							apt-get upgrade -y
+
+							# INSTALLATION BENÖTIGTER PAKETE
+							for i in $linuxinstall
+							do
+								apt-get install $i -y
+								clear
+							done
+							update
+
+
+					;;
+					N | n)
+						clear
+						echo "Okay, wir müssen das Script jedoch schließen!"
+						exit
+					;;
+				esac
+			;;
+			*)
+				clear
+				echo "Die Eingabe wurde nicht erkannt."
+				log_warning "Das Script wird beendet!"
+				exitf
+			;;
+		esac
+
 fi
 
 menue
