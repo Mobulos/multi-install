@@ -4,8 +4,8 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.0.3
-dat=20.04.2020
+ver=1.0.4
+dat=21.04.2020
 file=multi-install.sh
 link=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
 
@@ -246,16 +246,69 @@ installation () {
 if [[ $installfile="nano" ]]
 then
 	clear
-	apt-get install nano
-	clear
-	log_success "Nano Wurde installiert!"
-elif [[ $installfile="java" ]]
-	clear
+	if [[ -f ".debian" ]]; then
+		apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
+		packages=$(cat /root/list.txt)
+		grep -q '[^[:space:]]' < /root/list.txt
+		CHECK_LIST=$?
+		if [[ $CHECK_LIST -eq 1 ]]; then
+			log_warning "Du hast Nano bereits installiert!"
+			sleep 5
+			exitf
+			else
+			apt-get  install -y nano
+			apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
+			packages=$(cat /root/list.txt)
+			grep -q '[^[:space:]]' < /root/list.txt
+			CHECK_LIST=$?
+			clear
+			if [[ $CHECK_LIST -eq 1 ]]; then
+				log_success "Java wurde Erfolgreich installiert!"
+				sleep 2
+				exitf
+			else
+				log_error "Etwas ist schief gelaufen..."
+				sleep 2 exitf
+			fi
+		fi
+	else
 	log_warning "Die installation von java steht noch nicht zur verfügung!"
 	read -n1
 	exitf
-elfi [[ * ]]
-then
+-
+elif [[ $installfile="java" ]]
+	clear
+	if [[ -f ".debian" ]]; then
+		apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
+		packages=$(cat /root/list.txt)
+		grep -q '[^[:space:]]' < /root/list.txt
+		CHECK_LIST=$?
+		if [[ $CHECK_LIST -eq 1 ]]; then
+			log_warning "Du hast Java bereits installiert!"
+			sleep 5
+			exitf
+			else
+			apt-get  install -y default-jre
+			apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
+			packages=$(cat /root/list.txt)
+			grep -q '[^[:space:]]' < /root/list.txt
+			CHECK_LIST=$?
+			clear
+			if [[ $CHECK_LIST -eq 1 ]]; then
+				log_success "Java wurde Erfolgreich installiert!"
+				sleep 2
+				exitf
+			else
+				log_error "Etwas ist schief gelaufen..."
+				sleep 2 exitf
+			fi
+		fi
+	else
+	log_warning "Die installation von java steht noch nicht zur verfügung!"
+	read -n1
+	exitf
+	fi
+else
 	clear
 	log_warning "Ein Fehler ist aufgetreten!"
 	log_error "Die installation konnte nicht erkannt werden!"
@@ -442,7 +495,7 @@ elif [[ * ]]; then
 				read -n1 -p "Bist du dir sicher, dass du Debian hast? (Y|N)" verjn
 				case $verjn in
 					Y | y | j | J)
-						echo "Debian" >> .version
+						touch .debian
 						clear
 						echo "Deine Version wurde nun auf Debian gestellt!"
 						sleep 2
@@ -472,7 +525,7 @@ elif [[ * ]]; then
 				read -n1 -p "Bist du dir sicher, dass du Linux hast? (Y|N)" verjn
 				case $verjn in
 					Y | y | j | J)
-						echo "Linux" >> .version
+						touch .linux
 						clear
 						log_success "Deine Version wurde nun auch Linux gestellt!"
 						echo
