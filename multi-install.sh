@@ -56,7 +56,7 @@ clear
 #  |_____| /_/\_\ |___|   |_|   |_|    
 
 function exitf () {
-	read -n1 "Bitte drücke eine Taste..."
+	read -n1 -p "Bitte drücke eine Taste um fortzufahren..."
 	clear
 	echo 'Wenn das Script nicht korrekt beendet wurde kannst du es JEDERZEIT mit "STRG" + "C" ("CTRL" + "C") beenden!'
 	exit 0
@@ -198,7 +198,7 @@ function settings () {
 	3)
 		clear
 		log_warning "Es werden alle Daten zurückgesetzt"
-		log_warning "Der vorgang kann innerhalb 10 SEKUNDEN ABGEBROCHEN werden!"
+		log_warning 'Der vorgang kann innerhalb 10 SEKUNDEN ( "Strg" + "c") ABGEBROCHEN werden!'
 		sleep 10
 		clear
 		rm 20*
