@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.0.6
+ver=1.0.7
 dat=13.05.2020
 file=multi-install.sh
 link=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
@@ -56,6 +56,7 @@ clear
 #  |_____| /_/\_\ |___|   |_|   |_|    
 
 function exitf () {
+	read -n1 "Bitte drücke eine Taste..."
 	clear
 	echo 'Wenn das Script nicht korrekt beendet wurde kannst du es JEDERZEIT mit "STRG" + "C" ("CTRL" + "C") beenden!'
 	exit 0
