@@ -275,7 +275,7 @@ if [ $installfile="nano" ]; then
 	read -n1
 	exitf
 	fi
-elseif [ $installfile="java" ]; then
+elif [[ $installfile="java" ]]; then
 	clear
 	if [ -f ".debian" ]; then
 		apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
@@ -302,13 +302,13 @@ elseif [ $installfile="java" ]; then
 				sleep 2 exitf
 			fi
 		fi
-	elseif [ $installfile="basics" ]; then
+	elif [ $installfile="basics" ]; then
 		clear
 		if [ -f ".debian" ]; then
 		clear
 		log_warning "Comming Soon!"
 		read -n1
-		elseif [ -f ".linux" ]; then
+		elif [ -f ".linux" ]; then
 		clear
 		log_warning "Comming Soon!"
 		read -n1
@@ -379,7 +379,7 @@ developer () {
 				exitf
 			;;
 		esac
-  elseif [ * ]; then
+  elif [ * ]; then
     read -n1 -p "Möchtest du jetzt die Developer-Version erhalten?(fast) (Y/N) " versionj
     case $versionj in
     Y | y | j | J)
@@ -437,7 +437,7 @@ function update () {
 	if [ -f $(date +%Y-%m-%d) ]; then
 		# WENN HEUTE BEREITS UPGEDATED GEHE ZUM MENÜ
 		menue
-	elseif [ * ]; then
+	elif [ * ]; then
 		# WENN HEUTE NICHT UPGEDATED GEHE WEITER
 		# LÖSCHE "ZULETZT UPGEDATED" DATEI
 		touch "$(date +%Y-%m-%d)"
@@ -485,7 +485,7 @@ function soon () {
 if [ -f $(date +%Y-%m*) ]; then
 	# WENN NICHT ERSTER START:
 	update
-elseif [ * ]; then
+elif [ * ]; then
 	rm 20* || :
 	rm .log4bash.sh || :
 	rm .version || :
