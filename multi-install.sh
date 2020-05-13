@@ -4,8 +4,8 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.0.5
-dat=21.04.2020
+ver=1.0.6
+dat=13.05.2020
 file=multi-install.sh
 link=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
 
@@ -498,6 +498,7 @@ elif [ * ]; then
 		echo "Welche Linux Distribution ist installiert?"
 		echo "[1] Debian"
 		echo "[2] Linux"
+		echo "[3] Andere"
 		read -n1 -p "Deine Version: " verl
 		case $verl in
 			1)
@@ -565,6 +566,13 @@ elif [ * ]; then
 						exit
 					;;
 				esac
+			;;
+			3)
+				log_warning "Deine Linux Versin wird noch nicht unterstützt!"
+				echo 'Bitte erstelle ein "Issue" unter "https://github.com/Mobulos/multi-install/issues"!' 
+				echo
+				log_warning "Das Script wird nun beendet!"
+				exitf
 			;;
 			*)
 				clear
