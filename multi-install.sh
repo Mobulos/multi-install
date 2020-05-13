@@ -303,11 +303,18 @@ elseif [ $installfile="java" ]
 			fi
 		fi
 	elseif [ $installfile="basics" ]
+	then
 		clear
-		if [ -f ".debian" ]; then
-			
-		elseif [ -f ".linux" ]; then
-
+		if [ -f ".debian" ]
+		then
+		clear
+		log_warning "Comming Soon!"
+		read -n1
+		elseif [ -f ".linux" ]
+		then
+		clear
+		log_warning "Comming Soon!"
+		read -n1
 		fi
 	else
 	log_warning "Die installation von java steht noch nicht zur verfügung!"
