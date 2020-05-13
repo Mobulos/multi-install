@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.0.9
+ver=1.1.0
 dat=13.05.2020
 file=multi-install.sh
 link=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
@@ -58,10 +58,11 @@ clear
 function exitf () {
 	echo
 	read -n1 -p "Bitte drücke eine Taste um fortzufahren..."
+	rm list.txt
 	clear
-	echo 'Wenn das Script nicht korrekt beendet wurde kannst du es JEDERZEIT mit "STRG" + "C" ("CTRL" + "C") beenden!'
+	echo 'Wenn das Script nicht korrekt beendet wurde kannst du es JEDERZEIT mit "STRG" + "C" beenden!'
 	exit 0
-	sleep 5
+	sleep 60
 }
 
 
@@ -308,7 +309,8 @@ elif [[ $installfile="java" ]]; then
 				exitf
 			else
 				log_error "Etwas ist schief gelaufen..."
-				sleep 2 exitf
+				sleep 2
+				exitf
 			fi
 		fi
 	elif [ $installfile="basics" ]; then
@@ -316,11 +318,11 @@ elif [[ $installfile="java" ]]; then
 		if [ -f ".debian" ]; then
 		clear
 		log_warning "Comming Soon!"
-		read -n1
+		exitf
 		elif [ -f ".linux" ]; then
 		clear
 		log_warning "Comming Soon!"
-		read -n1
+		exitf
 		fi
 	else
 	log_warning "Die installation von java steht noch nicht zur verfügung!"
