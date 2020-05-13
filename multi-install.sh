@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.1.1
+ver=1.1.2
 dat=13.05.2020
 file=multi-install.sh
 link=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
@@ -248,8 +248,9 @@ installation () {
 	
 if [ $installfile="nano" ]; then
 	clear
+	log_error "COPY"
 	if [ -f ".debian" ]; then
-		apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
+apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 		packages=$(cat /root/list.txt)
 		grep -q '[^[:space:]' < /root/list.txt
 		CHECK_LIST=$?
@@ -259,7 +260,7 @@ if [ $installfile="nano" ]; then
 			exitf
 			else
 			apt-get  install -y nano
-			apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
+apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 			packages=$(cat /root/list.txt)
 			grep -q '[^[:space:]' < /root/list.txt
 			CHECK_LIST=$?
@@ -288,7 +289,7 @@ if [ $installfile="nano" ]; then
 elif [[ $installfile="java" ]]; then
 	clear
 	if [ -f ".debian" ]; then
-		apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
+apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 		packages=$(cat /root/list.txt)
 		grep -q '[^[:space:]' < /root/list.txt
 		CHECK_LIST=$?
@@ -298,7 +299,7 @@ elif [[ $installfile="java" ]]; then
 			exitf
 			else
 			apt-get  install -y default-jre
-			apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
+apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 			packages=$(cat /root/list.txt)
 			grep -q '[^[:space:]' < /root/list.txt
 			CHECK_LIST=$?
