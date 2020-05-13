@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.1.0
+ver=1.1.1
 dat=13.05.2020
 file=multi-install.sh
 link=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
@@ -465,8 +465,8 @@ function update () {
 		log_success "Das Update wurde Erfolgreich heruntergeladen!"
 		sleep 1
 		chmod +x $file
+		touch "$(date +%Y-%m-%d)"
 	fi
-	touch "$(date +%Y-%m-%d)"
 	exitf
 }
 
