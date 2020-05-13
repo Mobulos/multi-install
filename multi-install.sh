@@ -248,7 +248,7 @@ if [ $installfile="nano" ]; then
 	if [ -f ".debian" ]; then
 		apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 		packages=$(cat /root/list.txt)
-		grep -q '[^[:space:]]' < /root/list.txt
+		grep -q '[^[:space:]' < /root/list.txt
 		CHECK_LIST=$?
 		if [ $CHECK_LIST -eq 1 ]; then
 			log_warning "Du hast Nano bereits installiert!"
@@ -258,7 +258,7 @@ if [ $installfile="nano" ]; then
 			apt-get  install -y nano
 			apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 			packages=$(cat /root/list.txt)
-			grep -q '[^[:space:]]' < /root/list.txt
+			grep -q '[^[:space:]' < /root/list.txt
 			CHECK_LIST=$?
 			clear
 			if [ $CHECK_LIST -eq 1 ]; then
@@ -275,12 +275,12 @@ if [ $installfile="nano" ]; then
 	read -n1
 	exitf
 -
-elseif [[ $installfile="java" ]]
+elseif [ $installfile="java" ]
 	clear
 	if [ -f ".debian" ]; then
 		apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 		packages=$(cat /root/list.txt)
-		grep -q '[^[:space:]]' < /root/list.txt
+		grep -q '[^[:space:]' < /root/list.txt
 		CHECK_LIST=$?
 		if [ $CHECK_LIST -eq 1 ]; then
 			log_warning "Du hast Java bereits installiert!"
@@ -290,7 +290,7 @@ elseif [[ $installfile="java" ]]
 			apt-get  install -y default-jre
 			apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 			packages=$(cat /root/list.txt)
-			grep -q '[^[:space:]]' < /root/list.txt
+			grep -q '[^[:space:]' < /root/list.txt
 			CHECK_LIST=$?
 			clear
 			if [ $CHECK_LIST -eq 1 ]; then
@@ -302,11 +302,11 @@ elseif [[ $installfile="java" ]]
 				sleep 2 exitf
 			fi
 		fi
-	elseif [[ $installfile="basics" ]]
+	elseif [ $installfile="basics" ]
 		clear
 		if [ -f ".debian" ]; then
 			
-		elseif [[ -f ".linux" ]]; then
+		elseif [ -f ".linux" ]; then
 
 		fi
 	else
@@ -375,7 +375,7 @@ developer () {
 				exitf
 			;;
 		esac
-  elseif [[ * ]]; then
+  elseif [ * ]; then
     read -n1 -p "Möchtest du jetzt die Developer-Version erhalten?(fast) (Y/N) " versionj
     case $versionj in
     Y | y | j | J)
@@ -433,7 +433,7 @@ function update () {
 	if [ -f $(date +%Y-%m-%d) ]; then
 		# WENN HEUTE BEREITS UPGEDATED GEHE ZUM MENÜ
 		menue
-	elseif [[ * ]]; then
+	elseif [ * ]; then
 		# WENN HEUTE NICHT UPGEDATED GEHE WEITER
 		# LÖSCHE "ZULETZT UPGEDATED" DATEI
 		touch "$(date +%Y-%m-%d)"
@@ -481,7 +481,7 @@ function soon () {
 if [ -f $(date +%Y-%m*) ]; then
 	# WENN NICHT ERSTER START:
 	update
-elseif [[ * ]]; then
+elseif [ * ]; then
 	rm 20* || :
 	rm .log4bash.sh || :
 	rm .version || :
