@@ -4,15 +4,15 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.0.2
-dat=20.04.2020
+ver=1.1.2
+dat=13.05.2020
 file=multi-install-beta.sh
-link=https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
+link=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
 
 ### INSTALL ###
 debianinstall="curl wget sudo screen dialog"
 linuxinstall="curl wget sudo screen dialog"
-###         ###
+### INSTALL ###
 ############################################
 ############################################
 
@@ -56,10 +56,13 @@ clear
 #  |_____| /_/\_\ |___|   |_|   |_|    
 
 function exitf () {
+	echo
+	read -n1 -p "Bitte drücke eine Taste um fortzufahren..."
+	rm list.txt
 	clear
-	echo 'Wenn das Script nicht korrekt beendet wurde kannst du es JEDERZEIT mit "STRG" + "C" ("CTRL" + "C") beenden!'
+	echo 'Wenn das Script nicht korrekt beendet wurde kannst du es JEDERZEIT mit "STRG" + "C" beenden!'
 	exit 0
-	sleep 5
+	sleep 60
 }
 
 
@@ -197,7 +200,7 @@ function settings () {
 	3)
 		clear
 		log_warning "Es werden alle Daten zurückgesetzt"
-		log_warning "Der vorgang kann innerhalb 10 SEKUNDEN ABGEBROCHEN werden!"
+		log_warning 'Der vorgang kann innerhalb 10 SEKUNDEN ( "Strg" + "c") ABGEBROCHEN werden!'
 		sleep 10
 		clear
 		rm 20*
@@ -243,19 +246,91 @@ installation () {
 	installfile=`cat install`
 	clear
 	
-if [[ $installfile="nano" ]]
-then
+if [ $installfile="nano" ]; then
 	clear
-	apt-get install nano
-	clear
-	log_success "Nano Wurde installiert!"
-elif [[ $installfile="java" ]]
-	clear
+	log_error "COPY"
+	if [ -f ".debian" ]; then
+apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
+		packages=$(cat /root/list.txt)
+		grep -q '[^[:space:]' < /root/list.txt
+		CHECK_LIST=$?
+		if [ $CHECK_LIST -eq 1 ]; then
+			log_warning "Du hast Nano bereits installiert!"
+			sleep 5
+			exitf
+			else
+			apt-get  install -y nano
+apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
+			packages=$(cat /root/list.txt)
+			grep -q '[^[:space:]' < /root/list.txt
+			CHECK_LIST=$?
+			if [ $CHECK_LIST -eq 1 ]; then
+				clear
+				log_success "Java wurde Erfolgreich installiert!"
+				sleep 2
+				exitf
+			else
+				echo
+				echo
+				echo
+				log_error "Etwas ist schief gelaufen..."
+				echo
+				echo 'Bitte erstelle ein "issue" auf GitHub "https://github.com/Mobulos/multi-install/issues"'
+				echo 'Bitte füge alles ab "COPY" auf der Website ein!'
+				sleep 2
+				exitf
+			fi
+		fi
+	else
 	log_warning "Die installation von java steht noch nicht zur verfügung!"
 	read -n1
 	exitf
-elfi [[ * ]]
-then
+	fi
+elif [[ $installfile="java" ]]; then
+	clear
+	if [ -f ".debian" ]; then
+apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
+		packages=$(cat /root/list.txt)
+		grep -q '[^[:space:]' < /root/list.txt
+		CHECK_LIST=$?
+		if [ $CHECK_LIST -eq 1 ]; then
+			log_warning "Du hast Java bereits installiert!"
+			sleep 5
+			exitf
+			else
+			apt-get  install -y default-jre
+apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
+			packages=$(cat /root/list.txt)
+			grep -q '[^[:space:]' < /root/list.txt
+			CHECK_LIST=$?
+			clear
+			if [ $CHECK_LIST -eq 1 ]; then
+				log_success "Java wurde Erfolgreich installiert!"
+				sleep 2
+				exitf
+			else
+				log_error "Etwas ist schief gelaufen..."
+				sleep 2
+				exitf
+			fi
+		fi
+	elif [ $installfile="basics" ]; then
+		clear
+		if [ -f ".debian" ]; then
+		clear
+		log_warning "Comming Soon!"
+		exitf
+		elif [ -f ".linux" ]; then
+		clear
+		log_warning "Comming Soon!"
+		exitf
+		fi
+	else
+	log_warning "Die installation von java steht noch nicht zur verfügung!"
+	read -n1
+	exitf
+	fi
+else
 	clear
 	log_warning "Ein Fehler ist aufgetreten!"
 	log_error "Die installation konnte nicht erkannt werden!"
@@ -316,50 +391,50 @@ developer () {
 				exitf
 			;;
 		esac
-  elif [[ * ]]; then
-    read -n1 -p "Möchtest du jetzt die Developer-Version erhalten?(fast) (Y/N) " versionj
-    case $versionj in
-    Y | y | j | J)
-		touch .dev
-		rm 20*
-		clear
-		echo "Du erhälst ab jetzt die neuste (Alpha) Version!"
-		sleep 3
-		# SWITCH TO DEVELOPER
-		touch "$(date +%Y-%m-%d)"
-		rm 20*
-		clear
-		echo "$red Die neuste Version wird heruntergeladen"
-		rm multi-install*
-		curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh -o multi-install-beta.sh.1
-		# wget https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
-		sleep 2
-		echo "$reset"
-		mv multi-install-beta.sh.1 multi-install-beta.sh
-		clear
-		log_success "Das Update wurde Erfolgreich heruntergeladen!"
-		sleep 1
-		chmod +x multi-install-beta.sh
-		./multi-install-beta.sh
-		exitf
-      ;;
-    N | n)
-		rm 20*
-		clear
-		echo "Du erhältst weiterhin die offizielle Version!"
-		sleep 3
-		./$file
-		exitf
-      ;;
-    *)
-		clear
-		read -n1 "Eingabe nicht erkannt"
-		developer
-		exitf
-      ;;
-    esac
+  	elif [ * ]; then
+		read -n1 -p "Möchtest du jetzt die Developer-Version erhalten?(fast) (Y/N) " versionj
+		case $versionj in
+		Y | y | j | J)
+			touch .dev
+			rm 20*
+			clear
+			echo "Du erhälst ab jetzt die neuste (Alpha) Version!"
+			sleep 3
+			# SWITCH TO DEVELOPER
+			touch "$(date +%Y-%m-%d)"
+			rm 20*
+			clear
+			echo "$red Die neuste Version wird heruntergeladen"
+			rm multi-install*
+			curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh -o multi-install-beta.sh.1
+			# wget https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
+			sleep 2
+			echo "$reset"
+			mv multi-install-beta.sh.1 multi-install-beta.sh
+			clear
+			log_success "Das Update wurde Erfolgreich heruntergeladen!"
+			sleep 1
+			chmod +x multi-install-beta.sh
+			./multi-install-beta.sh
+			exitf
+		;;
+		N | n)
+			rm 20*
+			clear
+			echo "Du erhältst weiterhin die offizielle Version!"
+			sleep 3
+			./$file
+			exitf
+		;;
+		*)
+			clear
+			read -n1 "Eingabe nicht erkannt"
+			developer
+			exitf
+		;;
+		esac
 
-  fi
+  	fi
 }
 
 
@@ -374,7 +449,7 @@ function update () {
 	if [ -f $(date +%Y-%m-%d) ]; then
 		# WENN HEUTE BEREITS UPGEDATED GEHE ZUM MENÜ
 		menue
-	elif [[ * ]]; then
+	elif [ * ]; then
 		# WENN HEUTE NICHT UPGEDATED GEHE WEITER
 		# LÖSCHE "ZULETZT UPGEDATED" DATEI
 		touch "$(date +%Y-%m-%d)"
@@ -391,8 +466,8 @@ function update () {
 		log_success "Das Update wurde Erfolgreich heruntergeladen!"
 		sleep 1
 		chmod +x $file
+		touch "$(date +%Y-%m-%d)"
 	fi
-	touch "$(date +%Y-%m-%d)"
 	exitf
 }
 
@@ -422,7 +497,11 @@ function soon () {
 if [ -f $(date +%Y-%m*) ]; then
 	# WENN NICHT ERSTER START:
 	update
-elif [[ * ]]; then
+elif [ * ]; then
+	rm 20* || :
+	rm .log4bash.sh || :
+	rm .version || :
+	clear
 	# WENN ERSTER START:
 	# ERKENNE LINUX VERSION
 		echo "Folgende Linux Version wurde erkannt:"
@@ -431,6 +510,7 @@ elif [[ * ]]; then
 		echo "Welche Linux Distribution ist installiert?"
 		echo "[1] Debian"
 		echo "[2] Linux"
+		echo "[3] Andere"
 		read -n1 -p "Deine Version: " verl
 		case $verl in
 			1)
@@ -438,9 +518,11 @@ elif [[ * ]]; then
 				read -n1 -p "Bist du dir sicher, dass du Debian hast? (Y|N)" verjn
 				case $verjn in
 					Y | y | j | J)
-						echo "Debian" >> .version
+						touch .debian
 						clear
 						echo "Deine Version wurde nun auf Debian gestellt!"
+						echo
+						echo
 						sleep 2
 							apt-get update
 							clear
@@ -468,14 +550,15 @@ elif [[ * ]]; then
 				read -n1 -p "Bist du dir sicher, dass du Linux hast? (Y|N)" verjn
 				case $verjn in
 					Y | y | j | J)
-						echo "Linux" >> .version
+						touch .linux
 						clear
 						log_success "Deine Version wurde nun auch Linux gestellt!"
+						echo
 						echo
 						log_warning "Linux wurde bissher noch nicht getestet!"
 						echo
 						echo
-						echo "Wir bitten dich, fehler über Github zu melden!"
+						echo 'Wir bitten dich, fehler über Github zu melden ("https://github.com/Mobulos/multi-install/issues")!'
 						sleep 10
 						clear
 							apt-get update
@@ -498,6 +581,13 @@ elif [[ * ]]; then
 						exit
 					;;
 				esac
+			;;
+			3)
+				log_warning "Deine Linux Versin wird noch nicht unterstützt!"
+				echo 'Bitte erstelle ein "Issue" unter "https://github.com/Mobulos/multi-install/issues"!' 
+				echo
+				log_warning "Das Script wird nun beendet!"
+				exitf
 			;;
 			*)
 				clear
