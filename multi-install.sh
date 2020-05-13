@@ -56,6 +56,7 @@ clear
 #  |_____| /_/\_\ |___|   |_|   |_|    
 
 function exitf () {
+	echo
 	read -n1 -p "Bitte drücke eine Taste um fortzufahren..."
 	clear
 	echo 'Wenn das Script nicht korrekt beendet wurde kannst du es JEDERZEIT mit "STRG" + "C" ("CTRL" + "C") beenden!'
