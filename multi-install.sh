@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.0.8
+ver=1.0.9
 dat=13.05.2020
 file=multi-install.sh
 link=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
@@ -12,7 +12,7 @@ link=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-instal
 ### INSTALL ###
 debianinstall="curl wget sudo screen dialog"
 linuxinstall="curl wget sudo screen dialog"
-###         ###
+### INSTALL ###
 ############################################
 ############################################
 
@@ -262,14 +262,21 @@ if [ $installfile="nano" ]; then
 			packages=$(cat /root/list.txt)
 			grep -q '[^[:space:]' < /root/list.txt
 			CHECK_LIST=$?
-			clear
 			if [ $CHECK_LIST -eq 1 ]; then
+				clear
 				log_success "Java wurde Erfolgreich installiert!"
 				sleep 2
 				exitf
 			else
+				echo
+				echo
+				echo
 				log_error "Etwas ist schief gelaufen..."
-				sleep 2 exitf
+				echo
+				echo 'Bitte erstelle ein "issue" auf GitHub "https://github.com/Mobulos/multi-install/issues"'
+				echo 'Bitte füge alles ab "COPY" auf der Website ein!'
+				sleep 2
+				exitf
 			fi
 		fi
 	else
@@ -511,6 +518,7 @@ elif [ * ]; then
 						touch .debian
 						clear
 						echo "Deine Version wurde nun auf Debian gestellt!"
+						echo
 						sleep 2
 							apt-get update
 							clear
@@ -545,7 +553,7 @@ elif [ * ]; then
 						log_warning "Linux wurde bissher noch nicht getestet!"
 						echo
 						echo
-						echo "Wir bitten dich, fehler über Github zu melden!"
+						echo 'Wir bitten dich, fehler über Github zu melden ("https://github.com/Mobulos/multi-install/issues")!'
 						sleep 10
 						clear
 							apt-get update
