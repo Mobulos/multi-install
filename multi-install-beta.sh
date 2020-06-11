@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.2.2 
+ver=1.2.2.1
 dat=11.06.2020
 file=multi-install-beta.sh
 otherfile=multi-install.sh
@@ -17,7 +17,6 @@ linuxinstall="curl wget sudo screen dialog"
 ### INSTALL ###
 
 files="202* .debian .dev .log4bash.sh .version"
-
 
 ############################################
 ############################################
@@ -61,7 +60,7 @@ clear
 #  | |___   /  \   | |    | |   |  _|  
 #  |_____| /_/\_\ |___|   |_|   |_|    
 
-function exit {
+function exitf () {
 	echo
 	read -n1 -p "Bitte drücke eine Taste um fortzufahren..."
 	rm list.txt
