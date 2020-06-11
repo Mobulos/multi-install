@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.2.2.1
+ver=1.2.3
 dat=11.06.2020
 file=multi-install-beta.sh
 otherfile=multi-install.sh
