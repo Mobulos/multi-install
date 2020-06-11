@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.2.3.1
+ver=1.2.3.1.2
 dat=11.06.2020
 file=multi-install-beta.sh
 otherfile=multi-install.sh
@@ -229,14 +229,38 @@ installation () {
 	apt-get update
 	apt-get upgrade -y
 	clear
-	dialog --title "Progeamme" \
-		--menu  "Wähle ein Programm zum installieren:" 15 55 5 \
-			'nano' 'Textbearbeitung' \
-			'java' 'Installiert Java' 2> install
-	installfile=`cat install`
-	clear
-	
 
+	while true; do
+		sleep .5
+		echo "Auswahlmöglichkeiten:"
+
+		sleep .1
+		echo "$tput5 [1] Nano"
+
+		sleep .1
+		echo "$tput4 [2] Java"
+
+		echo -n "$tput3"
+		read -n1 -p "Was willst du installieren?: " insmen
+		clear
+		echo -n "$reset"
+		case $insmen in
+		1)
+			installfile="nano"
+			break
+			;;
+		2)
+			installfile="java"
+			break
+			;;
+		*)
+			clear
+			log_error "Du musst dich vertippt haben..."
+			read -n1 -t2
+			;;
+		esac
+	done
+	
  	# NANO
 
 	if [ $installfile="nano" ]; then
