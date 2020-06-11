@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.2.3
+ver=1.2.3.1
 dat=11.06.2020
 file=multi-install-beta.sh
 otherfile=multi-install.sh
@@ -53,22 +53,6 @@ chmod +x .log4bash.sh
 source .log4bash.sh
 clear
 
-
-#   _____  __  __  ___   _____   _____ 
-#  | ____| \ \/ / |_ _| |_   _| |  ___|
-#  |  _|    \  /   | |    | |   | |_   
-#  | |___   /  \   | |    | |   |  _|  
-#  |_____| /_/\_\ |___|   |_|   |_|    
-
-function exitf () {
-	echo
-	read -n1 -p "Bitte drücke eine Taste um fortzufahren..."
-	rm list.txt
-	clear
-	echo 'Wenn das Script nicht korrekt beendet wurde kannst du es JEDERZEIT mit "STRG" + "C" beenden!'
-	exit 0
-	sleep 60
-}
 
 
 #   ____    ____    _____ 
@@ -142,7 +126,7 @@ function menue () {
 	*)
 		clear
 		log_error "Du musst dich vertippt haben..."
-		sleep 2
+		read -n1 -t2
 		menue
 		;;
 	esac
@@ -223,7 +207,7 @@ function settings () {
 	*)
 		clear
 		log_error "Du musst dich vertippt haben..."
-		sleep 2
+		read -n1 -t2
 		settings
 		echo
 	;;
@@ -289,11 +273,11 @@ apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 		exit 0
 		fi
 
-
+	fi
 
 		# JAVA
 
-	elif [[ $installfile="java" ]]; then
+	if [ $installfile="java" ]; then
 		clear
 		if [ -f ".debian" ]; then
 apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
@@ -322,27 +306,11 @@ apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/li
 					exit 0
 				fi
 			fi
-		elif [ $installfile="basics" ]; then
-			clear
-			if [ -f ".debian" ]; then
-			clear
-			log_warning "Comming Soon!"
-			exit 0
-			elif [ -f ".linux" ]; then
-			clear
-			log_warning "Comming Soon!"
-			exit 0
-			fi
 		else
-		log_warning "Die installation von java steht noch nicht zur verfügung!"
+		log_warning "Die installation von Java steht noch nicht für dein System zur verfügung!"
 		read -n1 -t1
 		exit 0
 		fi
-	else
-		clear
-		error_state="state= install >> couldn't find software to install"
-		error
-		exit 0
 	fi
 rm install || :
 }
