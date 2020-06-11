@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.1.9
+ver=1.2.2
 dat=11.06.2020
 file=multi-install-beta.sh
 otherfile=multi-install.sh
@@ -15,6 +15,10 @@ otherlink=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-i
 debianinstall="curl wget sudo screen dialog"
 linuxinstall="curl wget sudo screen dialog"
 ### INSTALL ###
+
+files="202* .debian .dev .log4bash.sh .version"
+
+
 ############################################
 ############################################
 
@@ -57,7 +61,7 @@ clear
 #  | |___   /  \   | |    | |   |  _|  
 #  |_____| /_/\_\ |___|   |_|   |_|    
 
-function exit () {
+function exit {
 	echo
 	read -n1 -p "Bitte drücke eine Taste um fortzufahren..."
 	rm list.txt
@@ -143,7 +147,7 @@ function menue () {
 		menue
 		;;
 	esac
-exit
+exit 0
 }
 
 
@@ -197,7 +201,7 @@ function settings () {
 	;;
 	2)
 		developer
-		exit
+		exit 0
 	;;
 	3)
 		clear
@@ -205,12 +209,13 @@ function settings () {
 		log_warning 'Der vorgang kann innerhalb 10 SEKUNDEN ( "Strg" + "c") ABGEBROCHEN werden!'
 		sleep 10
 		clear
-		rm 20*
-		rm .log4bash.sh
-		rm .version
-		clear
+		for i in $files
+		do
+			rm $i || :
+			clear
+		done
 		log_success "Das Script wurde erfolgreich zurückgesetzt!"
-		exit
+		exit 0
 	;;
 	4)
 		menue
@@ -262,7 +267,7 @@ apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 			if [ $CHECK_LIST -eq 1 ]; then
 				log_warning "Du hast Nano bereits installiert!"
 				sleep 5
-				exit
+				exit 0
 				else
 				apt-get  install -y nano
 apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
@@ -273,7 +278,7 @@ apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 					clear
 					log_success "Nano wurde Erfolgreich installiert!"
 					sleep 2
-					exit
+					exit 0
 				else
 					error_state="state= install >> Nano >> not correctly installed"
 					error
@@ -282,7 +287,7 @@ apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 		else
 		log_warning "Die installation von Nano steht noch nicht für dein System zur verfügung!"
 		read -n1
-		exit
+		exit 0
 		fi
 
 
@@ -299,7 +304,7 @@ apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/li
 			if [ $CHECK_LIST -eq 1 ]; then
 				log_warning "Du hast Java bereits installiert!"
 				sleep 5
-				exit
+				exit 0
 				else
 				apt-get  install -y default-jre
 apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
@@ -310,12 +315,12 @@ apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/li
 				if [ $CHECK_LIST -eq 1 ]; then
 					log_success "Java wurde Erfolgreich installiert!"
 					sleep 2
-					exit
+					exit 0
 				else
 					error_state="state= install >> Java >> not correctly installed"
 					error
 					sleep 2
-					exit
+					exit 0
 				fi
 			fi
 		elif [ $installfile="basics" ]; then
@@ -323,22 +328,22 @@ apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/li
 			if [ -f ".debian" ]; then
 			clear
 			log_warning "Comming Soon!"
-			exit
+			exit 0
 			elif [ -f ".linux" ]; then
 			clear
 			log_warning "Comming Soon!"
-			exit
+			exit 0
 			fi
 		else
 		log_warning "Die installation von java steht noch nicht zur verfügung!"
 		read -n1 -t1
-		exit
+		exit 0
 		fi
 	else
 		clear
 		error_state="state= install >> couldn't find software to install"
 		error
-		exit
+		exit 0
 	fi
 rm install || :
 }
@@ -378,20 +383,20 @@ developer () {
 				sleep 1
 				chmod +x multi-install.sh
 				./multi-install.sh
-				exit
+				exit 0
 			;;
 			N | n)
 				clear
 				echo "Du erhälstst weiterhin Developer Updates."
 				sleep 3
 				./$file
-				exit
+				exit 0
 				;;
 				*)
 				clear
 				read -n1 "Eingabe nicht erkannt"
 				jumpto settings
-				exit
+				exit 0
 			;;
 		esac
   else
@@ -419,7 +424,7 @@ developer () {
 		sleep 1
 		chmod +x multi-install-beta.sh
 		./multi-install-beta.sh
-		exit
+		exit 0
       ;;
     N | n)
 		rm 20*
@@ -427,13 +432,13 @@ developer () {
 		echo "Du erhältst weiterhin die offizielle Version!"
 		sleep 3
 		./$file
-		exit
+		exit 0
       ;;
     *)
 		clear
 		read -n1 "Eingabe nicht erkannt"
 		developer
-		exit
+		exit 0
       ;;
     esac
 
@@ -471,7 +476,7 @@ function update () {
 		chmod +x $file
 		touch "$(date +%Y-%m-%d)"
 	fi
-	exit
+	exit 0
 }
 
 
@@ -501,10 +506,11 @@ if [ -f $(date +%Y-%m*) ]; then
 	# WENN NICHT ERSTER START:
 	update
 else
-	rm 20* || :
-	rm .log4bash.sh || :
-	rm .version || :
-	clear
+	for i in $files
+	do
+		rm $i || :
+		clear
+	done
 	# WENN ERSTER START:
 	# ERKENNE LINUX VERSION
 		echo "Folgende Linux Version wurde erkannt:"
@@ -543,7 +549,7 @@ else
 						clear
 						echo "Okay, wir müssen das Script jedoch schließen!"
 						sleep 3
-						exit
+						exit 0
 					;;
 				esac
 			;;
@@ -579,7 +585,7 @@ else
 					N | n)
 						clear
 						echo "Okay, wir müssen das Script jedoch schließen!"
-						exit
+						exit 0
 					;;
 				esac
 			;;
@@ -589,13 +595,13 @@ else
 				echo 'Bitte erstelle ein "Issue" unter "https://github.com/Mobulos/multi-install/issues"!' 
 				echo
 				log_warning "Das Script wird nun beendet!"
-				exit
+				exit 0
 			;;
 			*)
 				clear
 				echo "Die Eingabe wurde nicht erkannt."
 				log_warning "Das Script wird beendet!"
-				exit
+				exit 0
 			;;
 		esac
 
@@ -619,11 +625,11 @@ function error () {
 	echo 'Bitte füge alles ab "COPY" auf der Website ein!'
 	sleep 2
 	log_warning "Das Script wird beendet!"
-	exit
+	exit 0
 }
 
 
 
 
 menue
-exit
+exit 0
