@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.2.3.1.2
+ver=1.2.3.1.3
 dat=11.06.2020
 file=multi-install-beta.sh
 otherfile=multi-install.sh
@@ -47,11 +47,11 @@ tput9=($(tput setaf 9))
 
 # LADE DAS LOG FEATURE
 rm .log4bash.sh
-clear
+
 curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/log4bash.sh -o .log4bash.sh
 chmod +x .log4bash.sh
 source .log4bash.sh
-clear
+
 
 
 
@@ -88,7 +88,7 @@ function pre () {
                             
 function menue () {
 	set -u
-	clear
+	
 	pre
 	sleep .5
 	echo "Auswahlmöglichkeiten:"
@@ -107,7 +107,7 @@ function menue () {
 
 	echo -n "$tput3"
 	read -n1 -p "Was willst du tun?: " menbef
-	clear
+	
 	echo -n "$reset"
 	case $menbef in
 	1)
@@ -124,7 +124,7 @@ function menue () {
 		echo
 		;;
 	*)
-		clear
+		
 		log_error "Du musst dich vertippt haben..."
 		read -n1 -t2
 		menue
@@ -172,11 +172,11 @@ function settings () {
 	echo "[4] Zurück"
 	echo -n "$reset"
 	read -n1 -p "Was willst du tun?: " setbef
-	clear
+	
 	echo -n "$reset"
 	case $setbef in
 	1)
-		clear
+		
 		
 		echo ""
 		read -n1 -p "Bitte wähle deine Linux Version: " linver
@@ -187,15 +187,15 @@ function settings () {
 		exit 0
 	;;
 	3)
-		clear
+		
 		log_warning "Es werden alle Daten zurückgesetzt"
 		log_warning 'Der vorgang kann innerhalb 10 SEKUNDEN ( "Strg" + "c") ABGEBROCHEN werden!'
 		sleep 10
-		clear
+		
 		for i in $files
 		do
 			rm $i || :
-			clear
+			
 		done
 		log_success "Das Script wurde erfolgreich zurückgesetzt!"
 		exit 0
@@ -205,7 +205,7 @@ function settings () {
 		echo
 	;;
 	*)
-		clear
+		
 		log_error "Du musst dich vertippt haben..."
 		read -n1 -t2
 		settings
@@ -228,7 +228,7 @@ installation () {
 	rm install || :
 	apt-get update
 	apt-get upgrade -y
-	clear
+	
 
 	while true; do
 		sleep .5
@@ -242,7 +242,7 @@ installation () {
 
 		echo -n "$tput3"
 		read -n1 -p "Was willst du installieren?: " insmen
-		clear
+		
 		echo -n "$reset"
 		case $insmen in
 		1)
@@ -254,7 +254,7 @@ installation () {
 			break
 			;;
 		*)
-			clear
+			
 			log_error "Du musst dich vertippt haben..."
 			read -n1 -t2
 			;;
@@ -264,7 +264,7 @@ installation () {
  	# NANO
 
 	if [ $installfile="nano" ]; then
-		clear
+		
 		log_error "COPY"
 		if [ -f ".debian" ]; then
 apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
@@ -282,7 +282,7 @@ apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 				grep -q '[^[:space:]]' < /root/list.txt
 				CHECK_LIST=$?
 				if [ $CHECK_LIST -eq 1 ]; then
-					clear
+					
 					log_success "Nano wurde Erfolgreich installiert!"
 					sleep 2
 					exit 0
@@ -298,11 +298,11 @@ apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 		fi
 
 	fi
-
+	
 		# JAVA
 
 	if [ $installfile="java" ]; then
-		clear
+		
 		if [ -f ".debian" ]; then
 apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 			packages=$(cat /root/list.txt)
@@ -318,7 +318,7 @@ apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/li
 				packages=$(cat /root/list.txt)
 				grep -q '[^[:space:]]' < /root/list.txt
 				CHECK_LIST=$?
-				clear
+				
 				if [ $CHECK_LIST -eq 1 ]; then
 					log_success "Java wurde Erfolgreich installiert!"
 					sleep 2
@@ -346,7 +346,7 @@ rm install || :
 #  |____/  |_____|    \_/    |_____| |_____|  \___/  |_|     |_____| |_| \_\
 
 developer () {
-	clear
+	
 	if [ -f ".dev" ]; then
 		echo "Du erhälst bereits die Developer Version (fast)"
 		echo
@@ -356,12 +356,12 @@ developer () {
 				# DEVOLOPER STAY
 				rm .dev
 				rm 20*
-				clear
+				
 				echo "Du erhältst nun keine Developer-Versionen mehr!"
 				sleep 3
 				touch "$(date +%Y-%m-%d)"
 				rm 20*
-				clear
+				
 				echo "$red Die neuste Version wird heruntergeladen"
 				rm multi-install*
 				curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh -o multi-install.sh.1
@@ -369,7 +369,7 @@ developer () {
 				sleep 2
 				echo "$reset"
 				mv multi-install.sh.1 multi-install.sh
-				clear
+				
 				log_success "Das Update wurde Erfolgreich heruntergeladen!"
 				sleep 1
 				chmod +x multi-install.sh
@@ -377,14 +377,14 @@ developer () {
 				exit 0
 			;;
 			N | n)
-				clear
+				
 				echo "Du erhälstst weiterhin Developer Updates."
 				sleep 3
 				./$file
 				exit 0
 				;;
 				*)
-				clear
+				
 				read -n1 "Eingabe nicht erkannt"
 				jumpto settings
 				exit 0
@@ -396,13 +396,13 @@ developer () {
     Y | y | j | J)
 		touch .dev
 		rm 20*
-		clear
+		
 		echo "Du erhälst ab jetzt die neuste (Alpha) Version!"
 		sleep 3
 		# SWITCH TO DEVELOPER
 		touch "$(date +%Y-%m-%d)"
 		rm 20*
-		clear
+		
 		echo "$red Die neuste Version wird heruntergeladen"
 		rm multi-install*
 		curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh -o multi-install-beta.sh.1
@@ -410,7 +410,7 @@ developer () {
 		sleep 2
 		echo "$reset"
 		mv multi-install-beta.sh.1 multi-install-beta.sh
-		clear
+		
 		log_success "Das Update wurde Erfolgreich heruntergeladen!"
 		sleep 1
 		chmod +x multi-install-beta.sh
@@ -419,14 +419,14 @@ developer () {
       ;;
     N | n)
 		rm 20*
-		clear
+		
 		echo "Du erhältst weiterhin die offizielle Version!"
 		sleep 3
 		./$file
 		exit 0
       ;;
     *)
-		clear
+		
 		read -n1 "Eingabe nicht erkannt"
 		developer
 		exit 0
@@ -453,7 +453,7 @@ function update () {
 		# LÖSCHE "ZULETZT UPGEDATED" DATEI
 		touch "$(date +%Y-%m-%d)"
 		rm 20* || :
-		clear
+		
 		echo "$red Die neuste Version wird heruntergeladen"
 		rm $file
 		curl --progress-bar $link -o $file.1
@@ -461,7 +461,7 @@ function update () {
 		echo "$reset"
 		rm $file
 		mv $file.1 $file
-		clear
+		
 		log_success "Das Update wurde Erfolgreich heruntergeladen!"
 		sleep 1
 		chmod +x $file
@@ -478,10 +478,10 @@ function update () {
 #  |____/   \___/   \___/  |_| \_|
 
 function soon () {
-	clear
+	
 	log_warning "Diese Funktion wird später hinzugefügt!"
 	read -n1
-	clear
+	
 	menue
 }
 
@@ -500,7 +500,7 @@ else
 	for i in $files
 	do
 		rm $i || :
-		clear
+		
 	done
 	# WENN ERSTER START:
 	# ERKENNE LINUX VERSION
@@ -514,30 +514,30 @@ else
 		read -n1 -p "Deine Version: " verl
 		case $verl in
 			1)
-				clear
+				
 				read -n1 -p "Bist du dir sicher, dass du Debian hast? (Y|N)" verjn
 				case $verjn in
 					Y | y | j | J)
 						touch .debian
-						clear
+						
 						echo "Deine Version wurde nun auf Debian gestellt!"
 						echo
 						sleep 2
 							apt-get update
-							clear
+							
 							apt-get upgrade -y
 
 							# INSTALLATION BENÖTIGTER PAKETE
 							for i in $debianinstall
 							do
 								apt-get install $i -y
-								clear
+								
 							done
 							update
 
 					;;
 					N | n)
-						clear
+						
 						echo "Okay, wir müssen das Script jedoch schließen!"
 						sleep 3
 						exit 0
@@ -545,12 +545,12 @@ else
 				esac
 			;;
 			2)
-				clear
+				
 				read -n1 -p "Bist du dir sicher, dass du Linux hast? (Y|N)" verjn
 				case $verjn in
 					Y | y | j | J)
 						touch .linux
-						clear
+						
 						log_success "Deine Version wurde nun auch Linux gestellt!"
 						echo
 						log_warning "Linux wurde bissher noch nicht getestet!"
@@ -558,23 +558,23 @@ else
 						echo
 						echo 'Wir bitten dich, fehler über Github zu melden ("https://github.com/Mobulos/multi-install/issues")!'
 						sleep 10
-						clear
+						
 							apt-get update
-							clear
+							
 							apt-get upgrade -y
 
 							# INSTALLATION BENÖTIGTER PAKETE
 							for i in $linuxinstall
 							do
 								apt-get install $i -y
-								clear
+								
 							done
 							update
 
 
 					;;
 					N | n)
-						clear
+						
 						echo "Okay, wir müssen das Script jedoch schließen!"
 						exit 0
 					;;
@@ -589,7 +589,7 @@ else
 				exit 0
 			;;
 			*)
-				clear
+				
 				echo "Die Eingabe wurde nicht erkannt."
 				log_warning "Das Script wird beendet!"
 				exit 0
