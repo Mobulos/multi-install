@@ -4,8 +4,8 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.1.2
-dat=13.05.2020
+ver=1.1.3
+dat=12.06.2020
 file=multi-install.sh
 link=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
 
@@ -391,7 +391,7 @@ developer () {
 				exitf
 			;;
 		esac
-  elif [ * ]; then
+  else
     read -n1 -p "Möchtest du jetzt die Developer-Version erhalten?(fast) (Y/N) " versionj
     case $versionj in
     Y | y | j | J)
@@ -581,6 +581,7 @@ elif [ * ]; then
 				esac
 			;;
 			3)
+				echo
 				log_warning "Deine Linux Versin wird noch nicht unterstützt!"
 				echo 'Bitte erstelle ein "Issue" unter "https://github.com/Mobulos/multi-install/issues"!' 
 				echo
