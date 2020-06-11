@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.2.3.1.7
+ver=1.2.3.2
 dat=11.06.2020
 file=multi-install-beta.sh
 otherfile=multi-install.sh
@@ -263,8 +263,6 @@ installation () {
  	# NANO
 
 	if [ -f "nano" ]; then
-	echo "NANO"
-	sleep 5
 		clear
 		log_error "COPY"
 		if [ -f ".debian" ]; then
@@ -306,8 +304,6 @@ apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 		# JAVA
 
 	if [ -f "java" ]; then
-	echo "JAVA"
-	sleep 5
 		clear
 		if [ -f ".debian" ]; then
 		apt-get update
