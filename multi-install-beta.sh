@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.1.6
+ver=1.1.7
 dat=11.06.2020
 file=multi-install-beta.sh
 link=https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
@@ -449,7 +449,7 @@ function update () {
 	if [ -f $(date +%Y-%m-%d) ]; then
 		# WENN HEUTE BEREITS UPGEDATED GEHE ZUM MENÜ
 		menue
-	elif [ * ]; then
+	else
 		# WENN HEUTE NICHT UPGEDATED GEHE WEITER
 		# LÖSCHE "ZULETZT UPGEDATED" DATEI
 		touch "$(date +%Y-%m-%d)"
@@ -497,7 +497,7 @@ function soon () {
 if [ -f $(date +%Y-%m*) ]; then
 	# WENN NICHT ERSTER START:
 	update
-elif [ * ]; then
+else
 	rm 20* || :
 	rm .log4bash.sh || :
 	rm .version || :
