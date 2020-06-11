@@ -4,10 +4,12 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.1.7
+ver=1.1.8
 dat=11.06.2020
 file=multi-install-beta.sh
+otherfile=multi-install.sh
 link=https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
+otherlink=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
 
 ### INSTALL ###
 debianinstall="curl wget sudo screen dialog"
@@ -55,7 +57,7 @@ clear
 #  | |___   /  \   | |    | |   |  _|  
 #  |_____| /_/\_\ |___|   |_|   |_|    
 
-function exitf () {
+function exit () {
 	echo
 	read -n1 -p "Bitte drücke eine Taste um fortzufahren..."
 	rm list.txt
@@ -141,7 +143,7 @@ function menue () {
 		menue
 		;;
 	esac
-exitf
+exit
 }
 
 
@@ -195,7 +197,7 @@ function settings () {
 	;;
 	2)
 		developer
-		exitf
+		exit
 	;;
 	3)
 		clear
@@ -208,7 +210,7 @@ function settings () {
 		rm .version
 		clear
 		log_success "Das Script wurde erfolgreich zurückgesetzt!"
-		exitf
+		exit
 	;;
 	4)
 		menue
@@ -246,98 +248,99 @@ installation () {
 	installfile=`cat install`
 	clear
 	
-if [ $installfile="nano" ]; then
-	clear
-	log_error "COPY"
-	if [ -f ".debian" ]; then
-apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
-		packages=$(cat /root/list.txt)
-		grep -q '[^[:space:]]' < /root/list.txt
-		CHECK_LIST=$?
-		if [ $CHECK_LIST -eq 1 ]; then
-			log_warning "Du hast Nano bereits installiert!"
-			sleep 5
-			exitf
-			else
-			apt-get  install -y nano
+
+ 	# NANO
+
+	if [ $installfile="nano" ]; then
+		clear
+		log_error "COPY"
+		if [ -f ".debian" ]; then
 apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 			packages=$(cat /root/list.txt)
 			grep -q '[^[:space:]]' < /root/list.txt
 			CHECK_LIST=$?
 			if [ $CHECK_LIST -eq 1 ]; then
-				clear
-				log_success "Java wurde Erfolgreich installiert!"
-				sleep 2
-				exitf
-			else
-				echo
-				echo
-				echo
-				log_error "Etwas ist schief gelaufen..."
-				echo
-				echo 'Bitte erstelle ein "issue" auf GitHub "https://github.com/Mobulos/multi-install/issues"'
-				echo 'Bitte füge alles ab "COPY" auf der Website ein!'
-				sleep 2
-				exitf
+				log_warning "Du hast Nano bereits installiert!"
+				sleep 5
+				exit
+				else
+				apt-get  install -y nano
+apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
+				packages=$(cat /root/list.txt)
+				grep -q '[^[:space:]]' < /root/list.txt
+				CHECK_LIST=$?
+				if [ $CHECK_LIST -eq 1 ]; then
+					clear
+					log_success "Nano wurde Erfolgreich installiert!"
+					sleep 2
+					exit
+				else
+					error_state="state= install >> Nano >> not correctly installed"
+					error
+				fi
 			fi
+		else
+		log_warning "Die installation von Nano steht noch nicht für dein System zur verfügung!"
+		read -n1
+		exit
 		fi
-	else
-	log_warning "Die installation von java steht noch nicht zur verfügung!"
-	read -n1
-	exitf
-	fi
-elif [[ $installfile="java" ]]; then
-	clear
-	if [ -f ".debian" ]; then
-apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
-		packages=$(cat /root/list.txt)
-		grep -q '[^[:space:]]' < /root/list.txt
-		CHECK_LIST=$?
-		if [ $CHECK_LIST -eq 1 ]; then
-			log_warning "Du hast Java bereits installiert!"
-			sleep 5
-			exitf
-			else
-			apt-get  install -y default-jre
-apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
-			packages=$(cat /root/list.txt)
-			grep -q '[^[:space:]]' < /root/list.txt
-			CHECK_LIST=$?
-			clear
-			if [ $CHECK_LIST -eq 1 ]; then
-				log_success "Java wurde Erfolgreich installiert!"
-				sleep 2
-				exitf
-			else
-				log_error "Etwas ist schief gelaufen..."
-				sleep 2
-				exitf
-			fi
-		fi
-	elif [ $installfile="basics" ]; then
+
+
+
+		# JAVA
+
+	elif [[ $installfile="java" ]]; then
 		clear
 		if [ -f ".debian" ]; then
-		clear
-		log_warning "Comming Soon!"
-		exitf
-		elif [ -f ".linux" ]; then
-		clear
-		log_warning "Comming Soon!"
-		exitf
+apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
+			packages=$(cat /root/list.txt)
+			grep -q '[^[:space:]]' < /root/list.txt
+			CHECK_LIST=$?
+			if [ $CHECK_LIST -eq 1 ]; then
+				log_warning "Du hast Java bereits installiert!"
+				sleep 5
+				exit
+				else
+				apt-get  install -y default-jre
+apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
+				packages=$(cat /root/list.txt)
+				grep -q '[^[:space:]]' < /root/list.txt
+				CHECK_LIST=$?
+				clear
+				if [ $CHECK_LIST -eq 1 ]; then
+					log_success "Java wurde Erfolgreich installiert!"
+					sleep 2
+					exit
+				else
+					error_state="state= install >> Java >> not correctly installed"
+					error
+					sleep 2
+					exit
+				fi
+			fi
+		elif [ $installfile="basics" ]; then
+			clear
+			if [ -f ".debian" ]; then
+			clear
+			log_warning "Comming Soon!"
+			exit
+			elif [ -f ".linux" ]; then
+			clear
+			log_warning "Comming Soon!"
+			exit
+			fi
+		else
+		log_warning "Die installation von java steht noch nicht zur verfügung!"
+		read -n1 -t1
+		exit
 		fi
 	else
-	log_warning "Die installation von java steht noch nicht zur verfügung!"
-	read -n1
-	exitf
+		clear
+		error_state="state= install >> couldn't find software to install"
+		error
+		exit
 	fi
-else
-	clear
-	log_warning "Ein Fehler ist aufgetreten!"
-	log_error "Die installation konnte nicht erkannt werden!"
-	echo
-	log_warning "Das Script wird beendet!"
-	exitf
-fi
+rm install || :
 }
 
 #   ____    _____  __     __  _____   _        ___    ____    _____   ____  
@@ -375,20 +378,20 @@ developer () {
 				sleep 1
 				chmod +x multi-install.sh
 				./multi-install.sh
-				exitf
+				exit
 			;;
 			N | n)
 				clear
 				echo "Du erhälstst weiterhin Developer Updates."
 				sleep 3
 				./$file
-				exitf
+				exit
 				;;
 				*)
 				clear
 				read -n1 "Eingabe nicht erkannt"
 				jumpto settings
-				exitf
+				exit
 			;;
 		esac
   else
@@ -416,7 +419,7 @@ developer () {
 		sleep 1
 		chmod +x multi-install-beta.sh
 		./multi-install-beta.sh
-		exitf
+		exit
       ;;
     N | n)
 		rm 20*
@@ -424,13 +427,13 @@ developer () {
 		echo "Du erhältst weiterhin die offizielle Version!"
 		sleep 3
 		./$file
-		exitf
+		exit
       ;;
     *)
 		clear
 		read -n1 "Eingabe nicht erkannt"
 		developer
-		exitf
+		exit
       ;;
     esac
 
@@ -468,7 +471,7 @@ function update () {
 		chmod +x $file
 		touch "$(date +%Y-%m-%d)"
 	fi
-	exitf
+	exit
 }
 
 
@@ -586,17 +589,41 @@ else
 				echo 'Bitte erstelle ein "Issue" unter "https://github.com/Mobulos/multi-install/issues"!' 
 				echo
 				log_warning "Das Script wird nun beendet!"
-				exitf
+				exit
 			;;
 			*)
 				clear
 				echo "Die Eingabe wurde nicht erkannt."
 				log_warning "Das Script wird beendet!"
-				exitf
+				exit
 			;;
 		esac
 
 fi
 
+#   _____                              
+#  | ____|  _ __   _ __    ___    _ __ 
+#  |  _|   | '__| | '__|  / _ \  | '__|
+#  | |___  | |    | |    | (_) | | |   
+#  |_____| |_|    |_|     \___/  |_|   
+
+
+function error () {
+	echo
+	echo
+	echo
+	log_warning "Ein Fehler ist aufgetreten!"
+	log_error "$state"
+	echo
+	echo 'Bitte erstelle ein "issue" auf GitHub "https://github.com/Mobulos/multi-install/issues"'
+	echo 'Bitte füge alles ab "COPY" auf der Website ein!'
+	sleep 2
+	log_warning "Das Script wird beendet!"
+	exit
+}
+
+
+
+
 menue
-exitf
+exit
