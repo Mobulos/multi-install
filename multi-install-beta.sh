@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.1.8
+ver=1.1.9
 dat=11.06.2020
 file=multi-install-beta.sh
 otherfile=multi-install.sh
@@ -134,7 +134,7 @@ function menue () {
 		settings
 		;;
 	4)
-		continue
+		echo
 		;;
 	*)
 		clear
@@ -214,14 +214,14 @@ function settings () {
 	;;
 	4)
 		menue
-		continue
+		echo
 	;;
 	*)
 		clear
 		log_error "Du musst dich vertippt haben..."
 		sleep 2
 		settings
-		continue
+		echo
 	;;
 	esac
 }
