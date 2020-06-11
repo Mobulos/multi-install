@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.2.3.1.3
+ver=1.2.3.1.4
 dat=11.06.2020
 file=multi-install-beta.sh
 otherfile=multi-install.sh
@@ -246,10 +246,12 @@ installation () {
 		echo -n "$reset"
 		case $insmen in
 		1)
+			installfile=
 			installfile="nano"
 			break
 			;;
 		2)
+			installfile=
 			installfile="java"
 			break
 			;;
