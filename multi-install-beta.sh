@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.2.3.1.6
+ver=1.2.3.1.7
 dat=11.06.2020
 file=multi-install-beta.sh
 otherfile=multi-install.sh
@@ -245,13 +245,11 @@ installation () {
 		echo -n "$reset"
 		case $insmen in
 		1)
-			installfile=
-			installfile="nano"
+			touch nano
 			break
 			;;
 		2)
-			installfile=
-			installfile="java"
+			touch java
 			break
 			;;
 		*)
@@ -264,7 +262,7 @@ installation () {
 	
  	# NANO
 
-	if [ $installfile="nano" ]; then
+	if [ -f "nano" ]; then
 	echo "NANO"
 	sleep 5
 		clear
@@ -307,7 +305,7 @@ apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 	
 		# JAVA
 
-	if [ $installfile="java" ]; then
+	if [ -f "java" ]; then
 	echo "JAVA"
 	sleep 5
 		clear
@@ -346,6 +344,8 @@ apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/li
 		exit 0
 		fi
 	fi
+rm java || :
+rm nano || :
 rm install || :
 }
 
