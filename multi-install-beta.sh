@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.2.3.1.5
+ver=1.2.3.1.6
 dat=11.06.2020
 file=multi-install-beta.sh
 otherfile=multi-install.sh
@@ -300,7 +300,8 @@ apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 		read -n1
 		exit 0
 		fi
-
+	else
+	echo
 	fi
 	
 		# JAVA
