@@ -4,7 +4,7 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.2.3.2
+ver=1.2.4
 dat=11.06.2020
 file=multi-install-beta.sh
 otherfile=multi-install.sh
@@ -70,12 +70,12 @@ function pre () {
 	echo "##########################################"
 	sleep .1
 	echo
-	echo "$reset""Version $ver"
-	#echo "$red""[DEVELOPER] "$reset"Version $ver"
+	#echo "$reset""Version $ver"
+	echo "$red""[DEVELOPER] "$reset"Version $ver"
 	echo "Update $dat"
 	echo -n "$reset"
 	echo
-	#log_warning "Dies ist die PRE-RELEASE Version, das Script verfügt noch nicht über alle Funktionen!"
+	log_warning "Dies ist die PRE-RELEASE Version, das Script verfügt noch nicht über alle Funktionen!"
 	echo
 
 }
@@ -466,7 +466,8 @@ function update () {
 		sleep 2
 		echo "$reset"
 		rm $file
-		mv $file.1 $file
+		cp $file.1 $file
+		rm $file.1
 		clear
 		log_success "Das Update wurde Erfolgreich heruntergeladen!"
 		sleep 1
