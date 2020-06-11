@@ -4,10 +4,10 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.1.3
-dat=13.05.2020
+ver=1.1.6
+dat=11.06.2020
 file=multi-install-beta.sh
-link=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
+link=https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
 
 ### INSTALL ###
 debianinstall="curl wget sudo screen dialog"
@@ -80,12 +80,12 @@ function pre () {
 	echo "##########################################"
 	sleep .1
 	echo
-	#echo "$reset""Version $ver"
-	echo "$red""[DEVELOPER] "$reset"Version $ver"
+	echo "$reset""Version $ver"
+	#echo "$red""[DEVELOPER] "$reset"Version $ver"
 	echo "Update $dat"
 	echo -n "$reset"
 	echo
-	log_warning "Dies ist die PRE-RELEASE Version, das Script verfügt noch nicht über alle Funktionen!"
+	#log_warning "Dies ist die PRE-RELEASE Version, das Script verfügt noch nicht über alle Funktionen!"
 	echo
 
 }
@@ -132,7 +132,7 @@ function menue () {
 		settings
 		;;
 	4)
-		echo
+		continue
 		;;
 	*)
 		clear
@@ -252,7 +252,7 @@ if [ $installfile="nano" ]; then
 	if [ -f ".debian" ]; then
 apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 		packages=$(cat /root/list.txt)
-		grep -q '[[:space:]]' < /root/list.txt
+		grep -q '[^[:space:]]' < /root/list.txt
 		CHECK_LIST=$?
 		if [ $CHECK_LIST -eq 1 ]; then
 			log_warning "Du hast Nano bereits installiert!"
@@ -262,7 +262,7 @@ apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 			apt-get  install -y nano
 apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 			packages=$(cat /root/list.txt)
-			grep -q '[[:space:]]' < /root/list.txt
+			grep -q '[^[:space:]]' < /root/list.txt
 			CHECK_LIST=$?
 			if [ $CHECK_LIST -eq 1 ]; then
 				clear
@@ -291,7 +291,7 @@ elif [[ $installfile="java" ]]; then
 	if [ -f ".debian" ]; then
 apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 		packages=$(cat /root/list.txt)
-		grep -q '[[:space:]]' < /root/list.txt
+		grep -q '[^[:space:]]' < /root/list.txt
 		CHECK_LIST=$?
 		if [ $CHECK_LIST -eq 1 ]; then
 			log_warning "Du hast Java bereits installiert!"
@@ -301,7 +301,7 @@ apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/li
 			apt-get  install -y default-jre
 apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 			packages=$(cat /root/list.txt)
-			grep -q '[[:space:]]' < /root/list.txt
+			grep -q '[^[:space:]]' < /root/list.txt
 			CHECK_LIST=$?
 			clear
 			if [ $CHECK_LIST -eq 1 ]; then
@@ -391,50 +391,50 @@ developer () {
 				exitf
 			;;
 		esac
-  	elif [ * ]; then
-		read -n1 -p "Möchtest du jetzt die Developer-Version erhalten?(fast) (Y/N) " versionj
-		case $versionj in
-		Y | y | j | J)
-			touch .dev
-			rm 20*
-			clear
-			echo "Du erhälst ab jetzt die neuste (Alpha) Version!"
-			sleep 3
-			# SWITCH TO DEVELOPER
-			touch "$(date +%Y-%m-%d)"
-			rm 20*
-			clear
-			echo "$red Die neuste Version wird heruntergeladen"
-			rm multi-install*
-			curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh -o multi-install-beta.sh.1
-			# wget https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
-			sleep 2
-			echo "$reset"
-			mv multi-install-beta.sh.1 multi-install-beta.sh
-			clear
-			log_success "Das Update wurde Erfolgreich heruntergeladen!"
-			sleep 1
-			chmod +x multi-install-beta.sh
-			./multi-install-beta.sh
-			exitf
-		;;
-		N | n)
-			rm 20*
-			clear
-			echo "Du erhältst weiterhin die offizielle Version!"
-			sleep 3
-			./$file
-			exitf
-		;;
-		*)
-			clear
-			read -n1 "Eingabe nicht erkannt"
-			developer
-			exitf
-		;;
-		esac
+  else
+    read -n1 -p "Möchtest du jetzt die Developer-Version erhalten?(fast) (Y/N) " versionj
+    case $versionj in
+    Y | y | j | J)
+		touch .dev
+		rm 20*
+		clear
+		echo "Du erhälst ab jetzt die neuste (Alpha) Version!"
+		sleep 3
+		# SWITCH TO DEVELOPER
+		touch "$(date +%Y-%m-%d)"
+		rm 20*
+		clear
+		echo "$red Die neuste Version wird heruntergeladen"
+		rm multi-install*
+		curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh -o multi-install-beta.sh.1
+		# wget https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
+		sleep 2
+		echo "$reset"
+		mv multi-install-beta.sh.1 multi-install-beta.sh
+		clear
+		log_success "Das Update wurde Erfolgreich heruntergeladen!"
+		sleep 1
+		chmod +x multi-install-beta.sh
+		./multi-install-beta.sh
+		exitf
+      ;;
+    N | n)
+		rm 20*
+		clear
+		echo "Du erhältst weiterhin die offizielle Version!"
+		sleep 3
+		./$file
+		exitf
+      ;;
+    *)
+		clear
+		read -n1 "Eingabe nicht erkannt"
+		developer
+		exitf
+      ;;
+    esac
 
-  	fi
+  fi
 }
 
 
@@ -522,7 +522,6 @@ elif [ * ]; then
 						clear
 						echo "Deine Version wurde nun auf Debian gestellt!"
 						echo
-						echo
 						sleep 2
 							apt-get update
 							clear
@@ -554,7 +553,6 @@ elif [ * ]; then
 						clear
 						log_success "Deine Version wurde nun auch Linux gestellt!"
 						echo
-						echo
 						log_warning "Linux wurde bissher noch nicht getestet!"
 						echo
 						echo
@@ -583,6 +581,7 @@ elif [ * ]; then
 				esac
 			;;
 			3)
+				echo
 				log_warning "Deine Linux Versin wird noch nicht unterstützt!"
 				echo 'Bitte erstelle ein "Issue" unter "https://github.com/Mobulos/multi-install/issues"!' 
 				echo
