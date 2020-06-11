@@ -4,17 +4,23 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.1.3
-dat=12.06.2020
+ver=1.2.4
+dat=11.06.2020
+otherfile=multi-install-beta.sh
 file=multi-install.sh
+otherlink=https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
 link=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
 
 ### INSTALL ###
 debianinstall="curl wget sudo screen dialog"
 linuxinstall="curl wget sudo screen dialog"
 ### INSTALL ###
+
+files="202* .debian .dev .log4bash.sh .version"
+
 ############################################
 ############################################
+
 
 # ROOT CHECK
 FILE="/tmp/out.$$"
@@ -48,22 +54,6 @@ chmod +x .log4bash.sh
 source .log4bash.sh
 clear
 
-
-#   _____  __  __  ___   _____   _____ 
-#  | ____| \ \/ / |_ _| |_   _| |  ___|
-#  |  _|    \  /   | |    | |   | |_   
-#  | |___   /  \   | |    | |   |  _|  
-#  |_____| /_/\_\ |___|   |_|   |_|    
-
-function exitf () {
-	echo
-	read -n1 -p "Bitte drücke eine Taste um fortzufahren..."
-	rm list.txt
-	clear
-	echo 'Wenn das Script nicht korrekt beendet wurde kannst du es JEDERZEIT mit "STRG" + "C" beenden!'
-	exit 0
-	sleep 60
-}
 
 
 #   ____    ____    _____ 
@@ -132,16 +122,16 @@ function menue () {
 		settings
 		;;
 	4)
-		continue
+		echo
 		;;
 	*)
 		clear
 		log_error "Du musst dich vertippt haben..."
-		sleep 2
+		read -n1 -t2
 		menue
 		;;
 	esac
-exitf
+exit 0
 }
 
 
@@ -195,7 +185,7 @@ function settings () {
 	;;
 	2)
 		developer
-		exitf
+		exit 0
 	;;
 	3)
 		clear
@@ -203,23 +193,24 @@ function settings () {
 		log_warning 'Der vorgang kann innerhalb 10 SEKUNDEN ( "Strg" + "c") ABGEBROCHEN werden!'
 		sleep 10
 		clear
-		rm 20*
-		rm .log4bash.sh
-		rm .version
-		clear
+		for i in $files
+		do
+			rm $i || :
+			clear
+		done
 		log_success "Das Script wurde erfolgreich zurückgesetzt!"
-		exitf
+		exit 0
 	;;
 	4)
 		menue
-		continue
+		echo
 	;;
 	*)
 		clear
 		log_error "Du musst dich vertippt haben..."
-		sleep 2
+		read -n1 -t2
 		settings
-		continue
+		echo
 	;;
 	esac
 }
@@ -236,108 +227,122 @@ function settings () {
 
 installation () {
 	rm install || :
-	apt-get update
-	apt-get upgrade -y
 	clear
-	dialog --title "Progeamme" \
-		--menu  "Wähle ein Programm zum installieren:" 15 55 5 \
-			'nano' 'Textbearbeitung' \
-			'java' 'Installiert Java' 2> install
-	installfile=`cat install`
-	clear
+
+	while true; do
+		sleep .5
+		echo "Auswahlmöglichkeiten:"
+
+		sleep .1
+		echo "$tput5 [1] Nano"
+
+		sleep .1
+		echo "$tput4 [2] Java"
+
+		echo -n "$tput3"
+		read -n1 -p "Was willst du installieren?: " insmen
+		clear
+		echo -n "$reset"
+		case $insmen in
+		1)
+			touch nano
+			break
+			;;
+		2)
+			touch java
+			break
+			;;
+		*)
+			clear
+			log_error "Du musst dich vertippt haben..."
+			read -n1 -t2
+			;;
+		esac
+	done
 	
-if [ $installfile="nano" ]; then
-	clear
-	log_error "COPY"
-	if [ -f ".debian" ]; then
-apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
-		packages=$(cat /root/list.txt)
-		grep -q '[^[:space:]' < /root/list.txt
-		CHECK_LIST=$?
-		if [ $CHECK_LIST -eq 1 ]; then
-			log_warning "Du hast Nano bereits installiert!"
-			sleep 5
-			exitf
-			else
-			apt-get  install -y nano
+ 	# NANO
+
+	if [ -f "nano" ]; then
+		clear
+		log_error "COPY"
+		if [ -f ".debian" ]; then
+		apt-get update
+		apt-get upgrade -y
 apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 			packages=$(cat /root/list.txt)
-			grep -q '[^[:space:]' < /root/list.txt
+			grep -q '[^[:space:]]' < /root/list.txt
 			CHECK_LIST=$?
 			if [ $CHECK_LIST -eq 1 ]; then
-				clear
-				log_success "Java wurde Erfolgreich installiert!"
-				sleep 2
-				exitf
-			else
-				echo
-				echo
-				echo
-				log_error "Etwas ist schief gelaufen..."
-				echo
-				echo 'Bitte erstelle ein "issue" auf GitHub "https://github.com/Mobulos/multi-install/issues"'
-				echo 'Bitte füge alles ab "COPY" auf der Website ein!'
-				sleep 2
-				exitf
+				log_warning "Du hast Nano bereits installiert!"
+				sleep 5
+				exit 0
+				else
+				apt-get  install -y nano
+apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
+				packages=$(cat /root/list.txt)
+				grep -q '[^[:space:]]' < /root/list.txt
+				CHECK_LIST=$?
+				if [ $CHECK_LIST -eq 1 ]; then
+					clear
+					log_success "Nano wurde Erfolgreich installiert!"
+					sleep 2
+					exit 0
+				else
+					error_state="state= install >> Nano >> not correctly installed"
+					error
+				fi
 			fi
+		else
+		log_warning "Die installation von Nano steht noch nicht für dein System zur verfügung!"
+		read -n1
+		exit 0
 		fi
 	else
-	log_warning "Die installation von java steht noch nicht zur verfügung!"
-	read -n1
-	exitf
+	echo
 	fi
-elif [[ $installfile="java" ]]; then
-	clear
-	if [ -f ".debian" ]; then
-apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
-		packages=$(cat /root/list.txt)
-		grep -q '[^[:space:]' < /root/list.txt
-		CHECK_LIST=$?
-		if [ $CHECK_LIST -eq 1 ]; then
-			log_warning "Du hast Java bereits installiert!"
-			sleep 5
-			exitf
-			else
-			apt-get  install -y default-jre
-apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
-			packages=$(cat /root/list.txt)
-			grep -q '[^[:space:]' < /root/list.txt
-			CHECK_LIST=$?
-			clear
-			if [ $CHECK_LIST -eq 1 ]; then
-				log_success "Java wurde Erfolgreich installiert!"
-				sleep 2
-				exitf
-			else
-				log_error "Etwas ist schief gelaufen..."
-				sleep 2
-				exitf
-			fi
-		fi
-	elif [ $installfile="basics" ]; then
+	
+		# JAVA
+
+	if [ -f "java" ]; then
 		clear
 		if [ -f ".debian" ]; then
-		clear
-		log_warning "Comming Soon!"
-		exitf
-		elif [ -f ".linux" ]; then
-		clear
-		log_warning "Comming Soon!"
-		exitf
+		apt-get update
+		apt-get upgrade -y
+apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
+			packages=$(cat /root/list.txt)
+			grep -q '[^[:space:]]' < /root/list.txt
+			CHECK_LIST=$?
+			if [ $CHECK_LIST -eq 1 ]; then
+				log_warning "Du hast Java bereits installiert!"
+				sleep 5
+				exit 0
+				else
+				apt-get  install -y default-jre
+apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
+				packages=$(cat /root/list.txt)
+				grep -q '[^[:space:]]' < /root/list.txt
+				CHECK_LIST=$?
+				clear
+				if [ $CHECK_LIST -eq 1 ]; then
+					log_success "Java wurde Erfolgreich installiert!"
+					sleep 2
+					exit 0
+				else
+					error_state="state= install >> Java >> not correctly installed"
+					error
+					sleep 2
+					exit 0
+				fi
+			fi
+		else
+		log_warning "Die installation von Java steht noch nicht für dein System zur verfügung!"
+		read -n1 -t1
+		exit 0
 		fi
-	else
-	log_warning "Die installation von java steht noch nicht zur verfügung!"
-	read -n1
-	exitf
 	fi
-else
-	clear
-	log_warning "Ein Fehler ist aufgetreten!"
-	log_error "Die installation konnte nicht erkannt werden!"
-	echo
-	log_warning "Das Script wird beendet!"
-	exitf
-fi
+rm java || :
+rm nano || :
+rm install || :
 }
 
 #   ____    _____  __     __  _____   _        ___    ____    _____   ____  
@@ -375,20 +380,20 @@ developer () {
 				sleep 1
 				chmod +x multi-install.sh
 				./multi-install.sh
-				exitf
+				exit 0
 			;;
 			N | n)
 				clear
 				echo "Du erhälstst weiterhin Developer Updates."
 				sleep 3
 				./$file
-				exitf
+				exit 0
 				;;
 				*)
 				clear
 				read -n1 "Eingabe nicht erkannt"
 				jumpto settings
-				exitf
+				exit 0
 			;;
 		esac
   else
@@ -416,7 +421,7 @@ developer () {
 		sleep 1
 		chmod +x multi-install-beta.sh
 		./multi-install-beta.sh
-		exitf
+		exit 0
       ;;
     N | n)
 		rm 20*
@@ -424,13 +429,13 @@ developer () {
 		echo "Du erhältst weiterhin die offizielle Version!"
 		sleep 3
 		./$file
-		exitf
+		exit 0
       ;;
     *)
 		clear
 		read -n1 "Eingabe nicht erkannt"
 		developer
-		exitf
+		exit 0
       ;;
     esac
 
@@ -449,7 +454,7 @@ function update () {
 	if [ -f $(date +%Y-%m-%d) ]; then
 		# WENN HEUTE BEREITS UPGEDATED GEHE ZUM MENÜ
 		menue
-	elif [ * ]; then
+	else
 		# WENN HEUTE NICHT UPGEDATED GEHE WEITER
 		# LÖSCHE "ZULETZT UPGEDATED" DATEI
 		touch "$(date +%Y-%m-%d)"
@@ -461,14 +466,15 @@ function update () {
 		sleep 2
 		echo "$reset"
 		rm $file
-		mv $file.1 $file
+		cp $file.1 $file
+		rm $file.1
 		clear
 		log_success "Das Update wurde Erfolgreich heruntergeladen!"
 		sleep 1
 		chmod +x $file
 		touch "$(date +%Y-%m-%d)"
 	fi
-	exitf
+	exit 0
 }
 
 
@@ -497,11 +503,12 @@ function soon () {
 if [ -f $(date +%Y-%m*) ]; then
 	# WENN NICHT ERSTER START:
 	update
-elif [ * ]; then
-	rm 20* || :
-	rm .log4bash.sh || :
-	rm .version || :
-	clear
+else
+	for i in $files
+	do
+		rm $i || :
+		clear
+	done
 	# WENN ERSTER START:
 	# ERKENNE LINUX VERSION
 		echo "Folgende Linux Version wurde erkannt:"
@@ -540,7 +547,7 @@ elif [ * ]; then
 						clear
 						echo "Okay, wir müssen das Script jedoch schließen!"
 						sleep 3
-						exit
+						exit 0
 					;;
 				esac
 			;;
@@ -576,7 +583,7 @@ elif [ * ]; then
 					N | n)
 						clear
 						echo "Okay, wir müssen das Script jedoch schließen!"
-						exit
+						exit 0
 					;;
 				esac
 			;;
@@ -586,17 +593,41 @@ elif [ * ]; then
 				echo 'Bitte erstelle ein "Issue" unter "https://github.com/Mobulos/multi-install/issues"!' 
 				echo
 				log_warning "Das Script wird nun beendet!"
-				exitf
+				exit 0
 			;;
 			*)
 				clear
 				echo "Die Eingabe wurde nicht erkannt."
 				log_warning "Das Script wird beendet!"
-				exitf
+				exit 0
 			;;
 		esac
 
 fi
 
+#   _____                              
+#  | ____|  _ __   _ __    ___    _ __ 
+#  |  _|   | '__| | '__|  / _ \  | '__|
+#  | |___  | |    | |    | (_) | | |   
+#  |_____| |_|    |_|     \___/  |_|   
+
+
+function error () {
+	echo
+	echo
+	echo
+	log_warning "Ein Fehler ist aufgetreten!"
+	log_error "$state"
+	echo
+	echo 'Bitte erstelle ein "issue" auf GitHub "https://github.com/Mobulos/multi-install/issues"'
+	echo 'Bitte füge alles ab "COPY" auf der Website ein!'
+	sleep 2
+	log_warning "Das Script wird beendet!"
+	exit 0
+}
+
+
+
+
 menue
-exitf
+exit 0
