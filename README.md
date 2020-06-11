@@ -21,8 +21,7 @@ bash -c  "$(wget -qO- https://git.io/JfTnX)"
 Das Script verfügt über 2 Versionen master (slow) und Developer (fast).
 
 ### Kein Risiko
-#### Wenn du dich nicht gut auskennst ist die master (slow) Version genau das richtige, benutzen ohne Risiken.
+#### Wenn du dich nicht gut auskennst ist die master (slow) Version genau das richtige, du kannst sie ohne Risiken benutzen.
 
-##### Wenn du jedoch auf die neusten Funktionen stehst ist die Developer Version für dich gedacht, sie Funktioniert, jedoch nicht immer.
-## Installation
+##### Wenn du jedoch auf die neusten Funktionen stehst ist die Developer Version für dich gedacht, sie Funktioniert - jedoch nicht immer.
 
