@@ -7,7 +7,7 @@ Wir benutzen zu diesen Zeitpunkt Debian, daher wird das Script vorerst auf Debia
 
 ## Installation
 ```
-bash -c  "$(wget -qO- https://git.io/JfTnX)"
+bash -c  "$(wget -qO- https://git.io/Jf9V1)"
 ```
 
 | Version | Supported          |
