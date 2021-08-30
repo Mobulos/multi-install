@@ -6,11 +6,11 @@
 ################# CHANGE ###################
 ver=1.2.6
 dat=30.08.2021
-file=multi-install.sh
-otherfile=multi-install-beta.sh
+file=multi-install-beta.sh
+otherfile=multi-install.sh
 betafile=multi-install-beta.sh
-link=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
-otherlink=https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
+link=https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
+otherlink=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
 
 ### INSTALL ###
 debianinstall="curl wget sudo screen dialog"
