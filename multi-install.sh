@@ -1,16 +1,45 @@
 #!/bin/bash
 # Init
 
+# LADE DAS LOG FEATURE
+rm .log4bash.sh
+clear
+curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/log4bash.sh -o .log4bash.sh
+chmod +x .log4bash.sh
+source .log4bash.sh
+clear
+
 
 ############################################
 ################# CHANGE ###################
-ver=1.2.6
+ver=1.3.0
 dat=30.08.2021
-file=multi-install-beta.sh
-otherfile=multi-install.sh
 betafile=multi-install-beta.sh
-link=https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
-otherlink=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
+
+
+
+# Version can be public or beta
+version="public"
+if [ "$version" == "public" ]; then
+	link="https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh"
+	file=multi-install.sh
+	continue
+elif [ "$version" == "beta" ]; then
+	link="https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh"
+	file=multi-install-beta.sh
+	continue
+else
+	echo
+	echo
+	echo
+	log_warning "Ein Fehler ist aufgetreten!"
+	log_error "Die Version konnte nicht erkannt werden"
+	echo
+	echo 'Bitte erstelle ein "issue" auf GitHub "https://github.com/Mobulos/multi-install/issues"'
+	sleep 2
+	log_warning "Das Script wird beendet!"
+	exit 0
+fi
 
 ### INSTALL ###
 debianinstall="curl wget sudo screen dialog"
@@ -18,6 +47,7 @@ linuxinstall="curl wget sudo screen dialog"
 ### INSTALL ###
 
 files="202* .debian .dev .log4bash.sh .version"
+essentialslist="htop screen nano speedtest-cli"
 
 ############################################
 ############################################
@@ -47,19 +77,13 @@ tput8=($(tput setaf 8))
 tput9=($(tput setaf 9))
 
 
-# LADE DAS LOG FEATURE
-rm .log4bash.sh
-clear
-curl --progress-bar https://raw.githubusercontent.com/Mobulos/multi-install/master/log4bash.sh -o .log4bash.sh
-chmod +x .log4bash.sh
-source .log4bash.sh
-clear
+
 
 
 function check () {
 	if [ -f betafile ]; then
 		log_error "Die Developer Version des Scripts wird zurzeit nicht unterstützt!"
-	else
+	fi
 }
 
 
@@ -248,6 +272,9 @@ installation () {
 		sleep .1
 		echo "$tput4 [2] Java"
 
+		sleep .1
+		echo "$tput5 [3] Essentials"
+
 		echo -n "$tput3"
 		read -n1 -p "Was willst du installieren?: " insmen
 		clear
@@ -256,16 +283,20 @@ installation () {
 		1)
 			touch nano
 			break
-			;;
+		;;
 		2)
 			touch java
 			break
-			;;
+		;;
+		3)
+			touch essentials
+			break
+		;;
 		*)
 			clear
 			log_error "Du musst dich vertippt haben..."
 			read -n1 -t2
-			;;
+		;;
 		esac
 	done
 	
@@ -281,7 +312,6 @@ apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 			if [ $CHECK_LIST -eq 1 ]; then
 				log_warning "Du hast Nano bereits installiert!"
 				read -n1 -t5
-				exit 0
 				else
 				apt-get  install -y nano
 apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
@@ -292,7 +322,6 @@ apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 					clear
 					log_success "Nano wurde Erfolgreich installiert!"
 					sleep 2
-					exit 0
 				else
 					error_state="state= install >> Nano >> not correctly installed"
 					error
@@ -301,7 +330,6 @@ apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 		else
 		log_warning "Die installation von Nano steht noch nicht für dein System zur verfügung!"
 		read -n1
-		exit 0
 		fi
 	else
 	echo
@@ -319,7 +347,6 @@ apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/li
 			if [ $CHECK_LIST -eq 1 ]; then
 				log_warning "Du hast Java bereits installiert!"
 				sleep 5
-				exit 0
 			else
 				apt-get  install -y default-jre
 apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
@@ -330,23 +357,54 @@ apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/li
 				if [ $CHECK_LIST -eq 1 ]; then
 					log_success "Java wurde Erfolgreich installiert!"
 					sleep 2
-					exit 0
 				else
 					error_state="state= install >> Java >> not correctly installed"
 					error
 					sleep 2
-					exit 0
 				fi
 			fi
 		else
 			log_warning "Die installation von Java steht noch nicht für dein System zur verfügung!"
 			read -n1 -t1
-			exit 0
 		fi
 	fi
-rm java || :
-rm nano || :
-rm install || :
+
+	# ESSENTIALS
+	if [ -f "essentials" ]; then
+		clear
+		echo "Es werden follgende Pakete installiert:"
+		sleep .1
+		echo
+		for i in $essentialslist
+		do
+			sleep .1
+			echo $i
+		done
+		echo
+		sleep .5
+		read -n1 -p "Sollen diese installiert werden? (Y|N)" essins
+		case $essins in
+		y|Y|j|J)
+			clear
+			for i in $essentialslist
+			do
+				apt-get install -y $i
+			done
+			clear
+			log_warning "Es wird kein installations-check ausgeführt."
+			echo "Die installation wurde beendet"
+		;;
+		N|n)
+			clear
+			log_warning "Die Pakete werden NICHT installiert und das Script wird beendet."
+		;;
+		esac
+	fi
+screen -dmS delete rm java || :
+screen -dmS delete rm nano || :
+screen -dmS delete rm install || :
+screen -dmS delete rm essentials || :
+exit 0
 }
 
 #   ____    _____  __     __  _____   _        ___    ____    _____   ____  
@@ -627,7 +685,6 @@ function error () {
 	log_error "$state"
 	echo
 	echo 'Bitte erstelle ein "issue" auf GitHub "https://github.com/Mobulos/multi-install/issues"'
-	echo 'Bitte füge alles ab "COPY" auf der Website ein!'
 	sleep 2
 	log_warning "Das Script wird beendet!"
 	exit 0
