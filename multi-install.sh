@@ -12,7 +12,7 @@ clear
 
 ############################################
 ################# CHANGE ###################
-ver=1.3.0
+ver=1.3.1
 dat=30.08.2021
 betafile=multi-install-beta.sh
 
@@ -47,7 +47,8 @@ linuxinstall="curl wget sudo screen dialog"
 ### INSTALL ###
 
 files="202* .debian .dev .log4bash.sh .version"
-essentialslist="htop screen nano speedtest-cli"
+essentialslist="htop nano speedtest-cli"
+deletefilesonclose="java nano install essentials"
 
 ############################################
 ############################################
@@ -94,6 +95,10 @@ function check () {
 #  |_|     |_| \_\ |_____|
 
 function pre () {
+		for i in $deletefilesonclose
+	do
+		screen -dmS delete rm $i || :
+	done
 	echo "$yellow##########################################"
 	sleep .1
 	echo "#### Multi-Install  Script By Mobulos ####"
@@ -134,7 +139,7 @@ function menue () {
 	echo "$tput4 [3] Einstellungen"
 
 	sleep .1
-	echo "$tput6 [4] Exit"
+	echo "$red [4] Exit"
 
 	echo -n "$tput3"
 	read -n1 -p "Was willst du tun?: " menbef
@@ -199,7 +204,7 @@ function settings () {
 	echo "[3] Script zurücksetzen"
 	sleep .1
 	tmp=($(tput setaf 6))
-	echo -n "$tmp"
+	echo -n "$red"
 	echo "[4] Zurück"
 	echo -n "$reset"
 	read -n1 -p "Was willst du tun?: " setbef
@@ -275,6 +280,9 @@ installation () {
 		sleep .1
 		echo "$tput5 [3] Essentials"
 
+		sleep .1
+		echo "$red [9] Exit"
+
 		echo -n "$tput3"
 		read -n1 -p "Was willst du installieren?: " insmen
 		clear
@@ -291,6 +299,11 @@ installation () {
 		3)
 			touch essentials
 			break
+		;;
+		9)
+			clear
+			log_warning "Das Script wird beendet!"
+			exit 0
 		;;
 		*)
 			clear
@@ -400,10 +413,10 @@ apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/li
 		;;
 		esac
 	fi
-screen -dmS delete rm java || :
-screen -dmS delete rm nano || :
-screen -dmS delete rm install || :
-screen -dmS delete rm essentials || :
+for i in $deletefilesonclose
+do
+	screen -dmS delete rm $i || :
+done
 exit 0
 }
 
@@ -687,6 +700,10 @@ function error () {
 	echo 'Bitte erstelle ein "issue" auf GitHub "https://github.com/Mobulos/multi-install/issues"'
 	sleep 2
 	log_warning "Das Script wird beendet!"
+	for i in $deletefilesonclose
+	do
+		screen -dmS delete rm $i || :
+	done
 	exit 0
 }
 
@@ -694,4 +711,8 @@ function error () {
 
 
 menue
+for i in $deletefilesonclose
+do
+	screen -dmS delete rm $i || :
+done
 exit 0
