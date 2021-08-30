@@ -531,6 +531,7 @@ function update () {
 	if [ -f $(date +%Y-%m-%d) ]; then
 		# WENN HEUTE BEREITS UPGEDATED GEHE ZUM MENÜ
 		menue
+		exit 0
 	else
 		# WENN HEUTE NICHT UPGEDATED GEHE WEITER
 		# LÖSCHE "ZULETZT UPGEDATED" DATEI
@@ -547,9 +548,9 @@ function update () {
 		rm $file.1
 		clear
 		log_success "Das Update wurde Erfolgreich heruntergeladen!"
-		sleep 1
 		chmod +x $file
 		touch "$(date +%Y-%m-%d)"
+		sleep 1
 	fi
 	exit 0
 }
