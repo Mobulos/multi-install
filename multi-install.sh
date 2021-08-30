@@ -12,7 +12,7 @@ clear
 
 ############################################
 ################# CHANGE ###################
-ver=1.3.1
+ver=1.3.2
 dat=30.08.2021
 betafile=multi-install-beta.sh
 
@@ -46,7 +46,7 @@ debianinstall="curl wget sudo screen dialog"
 linuxinstall="curl wget sudo screen dialog"
 ### INSTALL ###
 
-files="202* .debian .dev .log4bash.sh .version"
+files="202* .debian .dev .log4bash.sh .version java nano install essentials"
 essentialslist="htop nano speedtest-cli"
 deletefilesonclose="java nano install essentials"
 
@@ -213,10 +213,12 @@ function settings () {
 	case $setbef in
 	1)
 		clear
-		
-		echo ""
-		read -n1 -p "Bitte wähle deine Linux Version: " linver
-
+		log_warning "Um die Linux version zu ändern muss das Script über die Einstellung 'Script zurücksetzten' auf Werkeinstellungen zurückgesetzt werden."
+		sleep 5
+		echo
+		echo
+		settings
+		exit 0
 	;;
 	2)
 		clear
