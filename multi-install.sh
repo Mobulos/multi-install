@@ -4,12 +4,13 @@
 
 ############################################
 ################# CHANGE ###################
-ver=1.2.4
-dat=11.06.2020
-otherfile=multi-install-beta.sh
+ver=1.2.6
+dat=30.08.2021
 file=multi-install.sh
-otherlink=https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
+otherfile=multi-install-beta.sh
+betafile=multi-install-beta.sh
 link=https://raw.githubusercontent.com/Mobulos/multi-install/master/multi-install.sh
+otherlink=https://raw.githubusercontent.com/Mobulos/multi-install/developer/multi-install-beta.sh
 
 ### INSTALL ###
 debianinstall="curl wget sudo screen dialog"
@@ -55,6 +56,12 @@ source .log4bash.sh
 clear
 
 
+function check () {
+	if [ -f betafile ]; then
+		log_error "Die Developer Version des Scripts wird zurzeit nicht unterstützt!"
+	else
+}
+
 
 #   ____    ____    _____ 
 #  |  _ \  |  _ \  | ____|
@@ -77,7 +84,6 @@ function pre () {
 	echo
 	#log_warning "Dies ist die PRE-RELEASE Version, das Script verfügt noch nicht über alle Funktionen!"
 	echo
-
 }
 
 
@@ -86,7 +92,7 @@ function pre () {
 #  | |\/| | |  _|   |  \| | | | | | |  _|  
 #  | |  | | | |___  | |\  | | |_| | | |___ 
 #  |_|  |_| |_____| |_| \_|  \___/  |_____|
-                            
+
 function menue () {
 	set -u
 	clear
@@ -162,7 +168,7 @@ function settings () {
 	sleep .1
 	tmp=($(tput setaf 4))
 	echo -n "$tmp"
-	echo "[2] Developer Updates"
+	echo "[2] Developer Updates (Nicht verfügbar)."
 	sleep .1
 	tmp=($(tput setaf 5))
 	echo -n "$tmp"
@@ -184,6 +190,9 @@ function settings () {
 
 	;;
 	2)
+		clear
+		log_error "Developer Updates sind zurzeit nicht verfügbar!"
+		exit 1
 		developer
 		exit 0
 	;;
@@ -264,17 +273,14 @@ installation () {
 
 	if [ -f "nano" ]; then
 		clear
-		log_error "COPY"
 		if [ -f ".debian" ]; then
-		apt-get update
-		apt-get upgrade -y
 apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 			packages=$(cat /root/list.txt)
 			grep -q '[^[:space:]]' < /root/list.txt
 			CHECK_LIST=$?
 			if [ $CHECK_LIST -eq 1 ]; then
 				log_warning "Du hast Nano bereits installiert!"
-				sleep 5
+				read -n1 -t5
 				exit 0
 				else
 				apt-get  install -y nano
@@ -306,8 +312,6 @@ apt -qq list nano | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 	if [ -f "java" ]; then
 		clear
 		if [ -f ".debian" ]; then
-		apt-get update
-		apt-get upgrade -y
 apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 			packages=$(cat /root/list.txt)
 			grep -q '[^[:space:]]' < /root/list.txt
@@ -316,7 +320,7 @@ apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/li
 				log_warning "Du hast Java bereits installiert!"
 				sleep 5
 				exit 0
-				else
+			else
 				apt-get  install -y default-jre
 apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/list.txt
 				packages=$(cat /root/list.txt)
@@ -335,9 +339,9 @@ apt -qq list default-jre | grep -v "installed" | awk -F/ '{print $1}' > /root/li
 				fi
 			fi
 		else
-		log_warning "Die installation von Java steht noch nicht für dein System zur verfügung!"
-		read -n1 -t1
-		exit 0
+			log_warning "Die installation von Java steht noch nicht für dein System zur verfügung!"
+			read -n1 -t1
+			exit 0
 		fi
 	fi
 rm java || :
@@ -512,7 +516,10 @@ else
 	# WENN ERSTER START:
 	# ERKENNE LINUX VERSION
 		echo "Folgende Linux Version wurde erkannt:"
+		echo
+		echo "######################################"
 		cat /etc/issue
+		echo "######################################"
 		echo
 		echo "Welche Linux Distribution ist installiert?"
 		echo "[1] Debian"
